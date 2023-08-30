@@ -11,4 +11,5 @@ packaging==23.1
 #python-dotenv # No version specified
 #Werkzeug # No version specified
 pip==23.2.1
-python-dotenv mysqlclient
+python-dotenv
+mysqlclient
