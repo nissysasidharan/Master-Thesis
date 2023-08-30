@@ -5,16 +5,15 @@ import os
 import MySQLdb
 
 connection = MySQLdb.connect(
-  host= os.getenv("DB_HOST"),
-  user=os.getenv("DB_USERNAME"),
-  passwd= os.getenv("DB_PASSWORD"),
-  db= os.getenv("DB_NAME"),
-  autocommit = True,
-  ssl_mode = "VERIFY_IDENTITY",
-  ssl_ca="/Users/nissysasidharan/ca.pem",
-  ssl_cert="/Users/nissysasidharan/server-cert.pem",
-  ssl_key="/Users/nissysasidharan/server-key.pem"
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USERNAME"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME"),
+    autocommit=True,
+    ssl_ca="/etc/ssl/cert.pem",  # Use the correct path to your SSL CA certificate
+    ssl_verify_identity=True
 )
+
 
 
 app = Flask(__name__)
