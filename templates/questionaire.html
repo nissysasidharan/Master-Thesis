@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Experience Assessment</title>
+
+    <script src="https://kit.fontawesome.com/1b2b6a64da.js" crossorigin="anonymous"></script>
+
+    <style>
+
+
+        .header-container {
+            background-color: #16425B;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-head {
+            flex-grow: 1;
+            color: #D9DCD6; /* Change the text color */
+            font-family: Arial, sans-serif; /* Change the font */
+            font-size: 24px; /* Change the font size */
+            font-weight: bold; /* Change the font weight */
+        }
+
+        #logo img {
+            width: 350px;
+            height: 300px;
+            margin-right: 20px;
+        }
+
+        .assessment-container {
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            background-color: #D9DCD6;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .container-img {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px 0 0 10px;
+        }
+        .container-desp {
+            flex: 2;
+            padding: 20px;
+             flex-direction: row;
+        }
+
+        .container-desp h2 {
+            font-size: 24px;
+            color: #16425B;
+        }
+        .container-img.img-part-2 {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px 0 0 10px;
+            order: 2; /* Change the order to 2 to move it to the right */
+        }
+
+        .container-img.img-part-4 {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px 0 0 10px;
+            order: 2; /* Change the order to 2 to move it to the right */
+        }
+        .container-img.img-part-6 {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px 0 0 10px;
+            order: 2; /* Change the order to 2 to move it to the right */
+        }
+        .container-img.img-part-8 {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px 0 0 10px;
+            order: 2; /* Change the order to 2 to move it to the right */
+        }
+
+
+        .img-part-1 {
+            background-image: url('static/whoAreYou.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .img-part-2 {
+            background-image: url('static/MHmatters.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 10px 10px 0;
+        }
+        .img-part-3 {
+            background-image: url('static/private.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 10px 10px 0;
+        }
+        .img-part-4 {
+            background-image: url('static/recommendation.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 10px 10px 0;
+        }
+        .img-part-5 {
+            background-image: url('static/Interface.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 10px 10px 0;
+        }
+        .img-part-6 {
+            background-image: url('static/Model.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .img-part-7 {
+            background-image: url('static/background.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .img-part-8 {
+            background-image: url('static/Open-Ended.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 10px 10px 0;
+        }
+        .box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ccc;
+            padding: 2px;
+            border-radius: 2px;
+            margin-bottom: 5px;
+            background-color: #3A7CA5;
+        }
+
+
+        .submit-button {
+            display: block;
+            margin: 0 auto;
+            background-color: #3A7CA5;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #81C3D7;
+        }
+        .radio {
+            display: flex;
+            flex-direction: row; /* Arrange items horizontally */
+            gap: 10px; /* Add spacing between radio buttons */
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <div id="logo">
+            <img src="static/MindNexLog.png" alt="MindNexLog">
+        </div>
+        <div class="page-head">
+            <h2>User Experience Assessment</h2>
+        </div>
+    </div>
+    <div class="assessment-container">
+
+        <!-- Part 1: Demographic Information -->
+        <div class="container">
+            <div class="container-img img-part-1"></div>
+            <div class="container-desp">
+                <h2>Part 1: Demographic Information</h2>
+                <form method="post" action="/demographic">
+                    <label for="age">1. Age:</label>
+                    <input type="number" id="age" name="age" value="20" required><br><br>
+
+                    <label for="gender">2. Gender:</label>
+                    <select id="gender" name="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                    </select><br><br>
+
+                    <label for="education">3. Education Level:</label>
+                    <select id="education" name="education">
+                        <option value="high-school">High School</option>
+                        <option value="bachelors">Bachelor's</option>
+                        <option value="masters">Master's</option>
+                        <option value="phd">PhD</option>
+                        <option value="other">Other</option>
+                    </select><br><br>
+
+                    <label for="familiarity">4. How familiar are you with chatbots and mental health support?</label>
+                    <select id="familiarity" name="familiarity">
+                        <option value="not-familiar">Not familiar</option>
+                        <option value="somewhat-familiar">Somewhat familiar</option>
+                        <option value="very-familiar">Very familiar</option>
+                    </select><br><br>
+
+                    <button class="submit-button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="container desp">
+            <div class="container-img img-part-2"></div>
+            <div class="container-desp">
+                <h2>Part 2: Chatbot Interaction and CBT Techniques</h2>
+                <form method="post" action="/interaction">
+                    <!-- ... -->
+                    <label for="chatbot-interaction">5. How often have you used chatbots for mental health support?</label>
+                    <select id="chatbot-interaction" name="chatbot-interaction">
+                        <option value="never">Never</option>
+                        <option value="rarely">Rarely</option>
+                        <option value="sometimes">Sometimes</option>
+                        <option value="often">Often</option>
+                        <option value="very-often">Very Often</option>
+                    </select><br><br>
+
+                    <label for="cbt-techniques">6. Have you ever used Cognitive Behavioral Therapy (CBT) techniques?</label>
+                    <input type="radio" id="cbt-yes" name="cbt-techniques" value="yes">
+                    <label for="cbt-yes">Yes</label>
+                    <input type="radio" id="cbt-no" name="cbt-techniques" value="no" checked>
+                    <label for="cbt-no">No</label><br><br>
+
+                    <label for="favorite-techniques">7. If yes, what are your favorite CBT techniques? (You can select
+                        multiple)</label>
+                    <input type="checkbox" id="technique1" name="favorite-techniques" value="technique1">
+                    <label for="technique1">Technique 1</label>
+                    <input type="checkbox" id="technique2" name="favorite-techniques" value="technique2" checked>
+                    <label for="technique2">Technique 2</label>
+                    <!-- Add more checkboxes as needed -->
+                    <br><br>
+
+                    <button class="submit-button" type="submit">Submit</button>
+                </form>
+                <!-- ... -->
+            </div>
+        </div>
+
+        <!-- Part 3: Privacy and Trust Assessment -->
+        <div class="container">
+            <div class="container-img img-part-3"></div>
+            <div class="container-desp">
+                <h2>Part 3: Privacy and Trust Assessment</h2>
+                <form method="post" action="/privacy">
+                    <label for="personal-info-sharing">10. On a scale of 1 to 5, how comfortable are you sharing personal
+                        information (e.g., emotions, thoughts) with the chatbot?</label>
+                    <select id="personal-info-sharing" name="personal-info-sharing">
+                        <option value="1">1 (Not Comfortable at All)</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 (Very Comfortable)</option>
+                    </select><br><br>
+
+                    <label for="privacy-concerns">11. To what extent do you have concerns about your privacy when
+                        interacting with the chatbot?</label>
+                    <select id="privacy-concerns" name="privacy-concerns">
+                        <option value="no-concerns">No Concerns</option>
+                        <option value="slight-concerns">Slight Concerns</option>
+                        <option value="moderate-concerns">Moderate Concerns</option>
+                        <option value="strong-concerns">Strong Concerns</option>
+                        <option value="very-strong-concerns">Very Strong Concerns</option>
+                    </select><br><br>
+
+                    <label for="trust-level">12. How much do you trust the chatbot to keep your personal information
+                        secure?</label>
+                    <select id="trust-level" name="trust-level">
+                        <option value="completely-trust">Completely Trust</option>
+                        <option value="mostly-trust">Mostly Trust</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="slightly-distrust">Slightly Distrust</option>
+                        <option value="strongly-distrust">Strongly Distrust</option>
+                    </select><br><br>
+
+                    <button class="submit-button">Submit</button>
+                </form>
+            </div>
+        </div>
+        <!-- Part 4: Recommendation Relevance Assessment -->
+        <div class="container">
+            <div class="container-img img-part-4"></div>
+            <div class="container-desp">
+                <h2>Part 4: Recommendation Relevance Assessment</h2>
+                <form method="post" action="/recommendation">
+                    <label for="tried-recommendations">13. Have you ever worked with or tried any of the recommendations
+                        provided by the chatbot before?</label>
+                    <input type="radio" id="tried-yes" name="tried-recommendations" value="yes">
+                    <label for="tried-yes">Yes</label>
+                    <input type="radio" id="tried-no" name="tried-recommendations" value="no" checked>
+                    <label for="tried-no">No</label><br><br>
+
+                    <label for="trust-recommendations">14. Do you trust that following the recommendations provided by the
+                        chatbot can make a positive difference in managing your mental health?</label>
+                    <select id="trust-recommendations" name="trust-recommendations">
+                        <option value="completely-trust">Completely Trust</option>
+                        <option value="mostly-trust">Mostly Trust</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="slightly-distrust">Slightly Distrust</option>
+                        <option value="strongly-distrust">Strongly Distrust</option>
+                    </select><br><br>
+
+                    <label for="improvement-suggestions">15. What aspects do you think could be added or improved upon to
+                        make the recommendations provided by the chatbot more effective or relevant to your mental health
+                        concerns? (Open-ended)</label>
+                    <textarea id="improvement-suggestions" name="improvement-suggestions" rows="4" cols="50" required></textarea><br><br>
+
+                    <button class="submit-button">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Part 5: User Interface and Experience Assessment -->
+        <div class="container">
+            <div class="container-img img-part-5"></div>
+            <div class="container-desp">
+                <h2>Part 5: User Interface and Experience Assessment</h2>
+                <form method="post" action="/uiexperience">
+                    <label for="satisfaction-ui">16. How satisfied were you with the chatbot's user interface and
+                        interactions?</label>
+                    <select id="satisfaction-ui" name="satisfaction-ui">
+                        <option value="very-dissatisfied">Very Dissatisfied</option>
+                        <option value="dissatisfied">Dissatisfied</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="satisfied">Satisfied</option>
+                        <option value="very-satisfied">Very Satisfied</option>
+                    </select><br><br>
+
+                    <label for="ease-of-use">17. Overall, how easy was it to use and navigate the chatbot's user
+                        interface?</label>
+                    <select id="ease-of-use" name="ease-of-use">
+                        <option value="very-difficult">Very Difficult</option>
+                        <option value="somewhat-difficult">Somewhat Difficult</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="somewhat-easy">Somewhat Easy</option>
+                        <option value="very-easy">Very Easy</option>
+                    </select><br><br>
+
+                    <label for="welcoming-ui">18. How welcoming did you find the chatbot's user interface during the initial
+                        setup?</label>
+                    <select id="welcoming-ui" name="welcoming-ui">
+                        <option value="not-welcoming">Not Welcoming at All</option>
+                        <option value="somewhat-welcoming">Somewhat Welcoming</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="quite-welcoming">Quite Welcoming</option>
+                        <option value="very-welcoming">Very Welcoming</option>
+                    </select><br><br>
+
+                    <label for="scope-purpose-ui">19. To what extent did the chatbot's user interface explain its scope and
+                        purpose effectively?</label>
+                    <select id="scope-purpose-ui" name="scope-purpose-ui">
+                        <option value="not-effective">Not Effective at All</option>
+                        <option value="somewhat-effective">Somewhat Effective</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="quite-effective">Quite Effective</option>
+                        <option value="very-effective">Very Effective</option>
+                    </select><br><br>
+
+                    <label for="impact-ui">20. How much do you perceive the chatbot's user interface as contributing
+                        positively to your mental health and well-being?</label>
+                    <select id="impact-ui" name="impact-ui">
+                        <option value="strongly-negative">Strongly Negative Impact</option>
+                        <option value="slightly-negative">Slightly Negative Impact</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="slightly-positive">Slightly Positive Impact</option>
+                        <option value="strongly-positive">Strongly Positive Impact</option>
+                    </select><br><br>
+
+                    <button class="submit-button">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="container-img img-part-6"></div>
+            <div class="container-desp">
+                <h2>Part 6: Chatbot Model Effectiveness Assessment</h2>
+                <form method="post" action="/chatbotmodel">
+                    <p>21. Among the chatbot models you interacted with, which one did you find to be more effective in
+                        providing mental health support?</p>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="chatbotModel" value="ChatGPT" checked> ChatGPT
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="chatbotModel" value="BlenderBot"> BlenderBot
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="chatbotModel" value="DialogPT"> DialogPT
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="chatbotModel" value="NLPModel"> NLP Model
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="chatbotModel" value="CounselChatModel"> Counsel Chat Model
+                        </label>
+                    </div>
+
+
+                    <p>22. Based on the model you selected, please rate the following statements regarding your chatbot
+                        interaction experience:</p>
+                    <label for="scope-purpose-ui">a. The chatbot's personality was engaging and relatable.</label>
+                    <select id="scope-purpose-ui" name="personality" maxlength="255">
+                        <option value="strongly-Disagree">Strongly Disagree</option>
+                        <option value="Disagreee">Disagree</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="Agree">Agree</option>
+                        <option value="strongly-Agree">Strongly Agree</option>
+                    </select><br><br>
+                    <label for="scope-purpose-ui">b. The chatbot's responses were clear and understandable.</label>
+                    <select id="scope-purpose-ui" name="responses" maxlength="255">
+                        <option value="strongly-Disagree">Strongly Disagree</option>
+                        <option value="Disagreee">Disagree</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="Agree">Agree</option>
+                        <option value="strongly-Agree">Strongly Agree</option>
+                    </select><br><br>
+                    <label for="scope-purpose-ui">c. The chatbot seemed robotic in its responses.</label>
+                    <select id="scope-purpose-ui" name="robotic">
+                        <option value="strongly-Disagree">Strongly Disagree</option>
+                        <option value="Disagreee">Disagree</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="Agree">Agree</option>
+                        <option value="strongly-Agree">Strongly Agree</option>
+                    </select><br><br>
+                    <label for="scope-purpose-ui">d. The chatbot accurately understood my inputs and concerns.</label>
+                    <select id="scope-purpose-ui" name="concerns">
+                        <option value="strongly-Disagree">Strongly Disagree</option>
+                        <option value="Disagreee">Disagree</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="Agree">Agree</option>
+                        <option value="strongly-Agree">Strongly Agree</option>
+                    </select><br><br>
+                    <label for="scope-purpose-ui">e. TThe chatbot sometimes gave irrelevant responses.</label>
+                    <select id="scope-purpose-ui" name="irrelevant">
+                        <option value="strongly-Disagree">Strongly Disagree</option>
+                        <option value="Disagreee">Disagree</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="Agree">Agree</option>
+                        <option value="strongly-Agree">Strongly Agree</option>
+                    </select><br><br>
+                    <label for="scope-purpose-ui">f.The chatbot's handling of errors was satisfactory.</label>
+                    <select id="scope-purpose-ui" name="handling">
+                        <option value="strongly-Disagree">Strongly Disagree</option>
+                        <option value="Disagreee">Disagree</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="Agree">Agree</option>
+                        <option value="strongly-Agree">Strongly Agree</option>
+                    </select><br><br>
+
+                    <button class="submit-button">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Part 7: Emotional Experience Assessment (PANAS) -->
+        <div class="container">
+            <div class="container-img img-part-7"></div>
+            <div class="container-desp">
+                <h2>Part 7: Emotional Experience Assessment (PANAS)</h2>
+                <form method="post" action="/emotional">
+                    <!-- First Row -->
+                    <div class="row">
+                        <div class="question" style="display: inline-block;">
+                            <label for="Interested">Interested</label>
+                            <select id="Interested" name="Interested">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Distressed">Distressed</label>
+                            <select id="Distressed" name="Distressed">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Excited">Excited</label>
+                            <select id="Excited" name="Excited">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                    </div>
+
+                    <!-- Second Row -->
+                    <div class="row">
+                        <div class="question" style="display: inline-block;">
+                            <label for="Upset">Upset</label>
+                            <select id="Upset" name="Upset">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Strong">Strong</label>
+                            <select id="Strong" name="Strong">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Guilty">Guilty</label>
+                            <select id="Guilty" name="Guilty">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                    </div>
+                    <!-- Third Row -->
+                    <div class="row">
+                        <div class="question" style="display: inline-block;">
+                            <label for="Scared">Scared</label>
+                            <select id="Scared" name="Scared">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Hostile">Hostile</label>
+                            <select id="Hostile" name="Hostile">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Enthusiastic">Enthusiastic</label>
+                            <select id="Enthusiastic" name="Enthusiastic">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                    </div>
+
+                    <!-- Fourth Row -->
+                    <div class="row">
+                        <div class="question" style="display: inline-block;">
+                            <label for="Proud">Proud</label>
+                            <select id="Proud" name="Proud">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Irritable">Irritable</label>
+                            <select id="Irritable" name="Irritable">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Alert">Alert</label>
+                            <select id="Alert" name="Alert">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                    </div>
+                    <!-- Fourth Row -->
+                    <div class="row">
+                        <div class="question" style="display: inline-block;">
+                            <label for="Ashamed">Ashamed</label>
+                            <select id="Ashamed" name="Ashamed">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Inspired">Inspired</label>
+                            <select id="Inspired" name="Inspired">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Afraid">Afraid</label>
+                            <select id="Afraid" name="Afraid">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                    </div>
+
+                    <!-- Fifth Row -->
+                    <div class="row">
+                        <div class="question" style="display: inline-block;">
+                            <label for="Nervous">Nervous</label>
+                            <select id="Nervous" name="Nervous">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Determined">Determined</label>
+                            <select id="Determined" name="Determined">
+                               <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Attentive">Attentive</label>
+                            <select id="Attentive" name="Attentive">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Jittery">Jittery</label>
+                            <select id="Jittery" name="Jittery">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                        <div class="question" style="display: inline-block;">
+                            <label for="Active">Active</label>
+                            <select id="Active" name="Active">
+                                <option value="1">Very Slightly or Not at All</option>
+                                <option value="2">A Little</option>
+                                <option value="3">Moderately</option>
+                                <option value="4">Quite a Bit</option>
+                                <option value="5">Extremely</option>
+                            </select><br><br>
+                        </div>
+                    </div>
+
+                    <button class="submit-button">Submit</button>
+                </form>
+            </div>
+        </div>
+
+
+
+        <div class="container">
+            <div class="container-img img-part-8"></div>
+            <div class="container-desp">
+                <h2>Part 8: Open-Ended Feedback</h2>
+                <form method="post" action="/feedback">
+                    <p>26. Please provide any additional comments or feedback about your experience using the chatbot's UI,
+                        CBT techniques implemented, privacy and trust, recommendation relevance, or any other
+                        functionality.</p>
+                    <textarea name="openEndedFeedback" rows="6" cols="50" required></textarea><br><br>
+
+                    <button class="submit-button">Submit</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
