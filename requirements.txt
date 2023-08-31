@@ -13,3 +13,5 @@ packaging==23.1
 pip==23.2.1
 python-dotenv
 mysqlclient
+SQLAlchemy
+pymysql
