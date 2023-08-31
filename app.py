@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request, redirect
 
 from dotenv import load_dotenv
-load_dotenv()
 import os
 import MySQLdb
+
+# Load environment variables from .env
+load_dotenv()
+
+# Create a MySQL connection
 connection = MySQLdb.connect(
   host= os.getenv("DB_HOST"),
   user=os.getenv("DB_USERNAME"),
@@ -12,7 +16,7 @@ connection = MySQLdb.connect(
   autocommit = True,
   ssl_mode = "VERIFY_IDENTITY",
   ssl      = {
-    "ca": "/etc/ssl/cert.pem"
+    "ssl_ca": "/etc/ssl/cert.pem"
   }
 )
 
