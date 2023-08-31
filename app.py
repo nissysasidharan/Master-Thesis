@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -34,24 +34,7 @@ init_db(app)
 
 @app.route('/')
 def home():
-    return render_template('home.html')
-
-
-@app.route('/login', methods=['POST'])
-def login():
-    username = request.form.get('username')
-    password = request.form.get('password')
-
-    user = Users.query.filter_by(username=username).first()
-
-    if user and check_password_hash(user.password_hash, password):
-        # Log the user in
-        flash('Login successful!', 'success')
-        return redirect(url_for('dashboard'))
-    else:
-        flash('Invalid username or password.', 'error')
-        return redirect(url_for('home'))
-
+    return render_template('dashboard.html')
 
 @app.route('/create_user', methods=['POST'])
 def create_user():
@@ -62,10 +45,9 @@ def create_user():
     existing_user = Users.query.filter_by(username=username).first()
     if existing_user:
         flash('Username already exists.', 'error')
-        return redirect('home.html')
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    new_user = Users(username=username, password_hash=hashed_password, email=email)
+        return redirect(url_for('home'))
 
+    new_user = Users(username=username, password_hash=password, email=email)
 
     db.session.add(new_user)
     db.session.commit()
@@ -73,12 +55,50 @@ def create_user():
     flash('User created successfully! You can now log in.', 'success')
     return redirect(url_for('home'))
 
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
 
-@app.route('/dashboard')
+    user = Users.query.filter_by(username=username).first()
+
+    if user and user.password_hash == password:
+        session['username'] = username
+        flash('Login successful!', 'success')
+        return redirect(url_for('dashboard'))
+    else:
+        flash('Invalid username or password.', 'error')
+        return redirect(url_for('home'))
+
+
+@app.route("/dashboard")
 def dashboard():
-    return render_template('dashboard.html')
+    if "username" in session:
+        username = session["username"]
+        return render_template("dashboard.html", username=username)
+    else:
+        return redirect("/")
+@app.route('/recommendation.html')
+def recommendation():
+    return render_template('recommendation.html')
+
+@app.route('/questionaire.html')
+def assessment():
+    return render_template('questionaire.html')
+
+@app.route('/chat_history.html')
+def chathistory():
+    return render_template('chat_history.html')
+
+@app.route('/CBT.html')
+def cbt():
+    return render_template('CBT.html')
+
+@app.route('/model.html')
+def model():
+    return render_template('model.html')
 
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(port=5001)
