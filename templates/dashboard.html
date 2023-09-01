@@ -238,7 +238,7 @@
         }
 
         function openActivitWindow() {
-            window.open('activities.html', '_blank', 'width=800,height=600');
+            window.open('activity.html', '_blank', 'width=800,height=600');
         }
         function openCBTWindow() {
             window.open('CBT.html', '_blank', 'width=800,height=600');
@@ -246,18 +246,11 @@
         function openStatWindow() {
             window.open('statistics.html', '_blank', 'width=800,height=600');
         }
-        function openMusicWindow() {
-            window.open('music.html', '_blank', 'width=800,height=600');
+
+        function openAssessWindow() {
+            window.open('questionaire.html', '_blank', 'width=800,height=600');
         }
 
-        function openGameWindow() {
-            window.open('game.html', '_blank', 'width=800,height=600');
-        }
-        function openQuizWindow() {
-            window.open('quiz.html', '_blank', 'width=800,height=600');
-        }
-        function openAsessmentWindow() {
-            window.open('questionaire.html', '_blank', 'width=800,height=600');
 
 
 
@@ -271,7 +264,7 @@
             <button class="close-button" onclick="closeHelpWindow()">&times;</button>
             <h2>Need Help?</h2>
             <p>If you have any questions or need assistance, please contact us at:</p>
-            <p><a href="mailto:mindnexuswebsite@gmail.com">mindnexuswebsite@gmail.com</a></p>
+            <p><a href="mailto:support@example.com">support@example.com</a></p>
             <p>We will respond with in one bussiness day</p>
         </div>
     </div>
@@ -319,16 +312,16 @@
             <p>About CBT</p>
         </div>
         <div class="icon-container">
+            <a href="#" onclick="openAssessWindow()">
+                <i class="fas fa-question fa-4x" style="color: #81C3D7;"></i>
+            </a>
+            <p>Assessment</p>
+        </div>
+        <div class="icon-container">
             <a href="#" onclick="openActivitWindow()">
                 <i class="fas fa-tasks fa-4x" style="color: #81C3D7;"></i>
             </a>
             <p>Activities</p>
-        </div>
-        <div class="icon-container">
-            <a href="#" onclick="openAsessmentWindow()">
-                <i class="fas fa-question fa-4x" style="color: #81C3D7;"></i>
-            </a>
-            <p>Assessment</p>
         </div>
     </div>
     <hr> <!-- Line between the rows -->

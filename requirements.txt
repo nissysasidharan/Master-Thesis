@@ -4,4 +4,7 @@ python-dotenv
 mysql-connector-python
 gunicorn
 bcrypt
+transformers
+torch
+tensorflow
 

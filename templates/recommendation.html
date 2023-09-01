@@ -10,7 +10,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #D9DCD6;
+            background-color: #16425B;
         }
         h1 {
             text-align: center;
@@ -20,10 +20,10 @@
 
         }
         #logo {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 150px; /* Adjust the width of the logo as needed */
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 150px; /* Adjust the width of the logo as needed */
         }
         h2, h3 {
             font-size: 20px;
@@ -40,10 +40,38 @@
         .tab-content {
             padding: 20px 0;
         }
-        .recommended-articles-container,
-        .recommended-videos-container,
+        .recommended-container {
+            margin: 10px;
+        }
+
+        /* Style for the recommended articles container */
+        .recommended-articles-container {
+            border: 1px solid #16425B; /* Add a border */
+            background-color: #D9DCD6; /* Add a background color */
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Style for the recommended videos container */
+        .recommended-videos-container {
+            border: 1px solid #16425B; /* Add a border */
+            background-color: #D9DCD6; /* Add a different background color */
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Style for the recommended books container */
         .recommended-books-container {
-            margin-bottom: 30px;
+            border: 1px solid #16425B; /* Add a border */
+            background-color: #D9DCD6; /* Add a different background color */
+            padding: 10px;
+        }
+
+        /* Additional styling for list items (optional) */
+        .recommended-articles-container ul li,
+        .recommended-videos-container ul li,
+        .recommended-books-container ul li {
+            margin-bottom: 10px;
         }
         ul {
             list-style-type: none;
@@ -112,7 +140,7 @@
                     <h3>Recommended Articles</h3>
                     <ul>
                         {% for article in recommended_articles %}
-                        <li>
+                        <div class="article-box">
                             <a href="{{ article[2] }}" target="_blank">{{ article[1] }}</a>
                             <button class="like-button" data-article-id="{{ article[0] }}">
                                 <i class="fas fa-thumbs-up"></i> Like
@@ -120,7 +148,7 @@
                             <button class="unlike-button" data-article-id="{{ article[0] }}">
                                 <i class="fas fa-thumbs-down"></i> Unlike
                             </button>
-                        </li>
+                        </div>
                         {% endfor %}
                     </ul>
                 </div>
@@ -140,22 +168,24 @@
                         {% endfor %}
                     </ul>
                 </div>
+                <!--
                 <div class="recommended-books-container">
                     <h3>Recommended Books</h3>
                     <ul>
                         {% for book in recommended_books %}
                         <li>
-                            <a href="{{ book.link }}" target="_blank">{{ book.title }}</a>
-                            <button class="like-button" data-video-id="{{ video[0] }}">
+                            <a href="{{ book[2] }}" target="_blank">{{ book[1] }}</a>
+                            <button class="like-button" data-book-id="{{ book.id }}">
                                 <i class="fas fa-thumbs-up"></i> Like
                             </button>
-                            <button class="unlike-button" data-video-id="{{ video[0] }}">
+                            <button class="unlike-button" data-book-id="{{ book.id }}">
                                 <i class="fas fa-thumbs-down"></i> Unlike
                             </button>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
+                -->
             </div>
             <div class="tab-pane fade" id="exercise" role="tabpanel" aria-labelledby="exercise-tab">
              {% include 'exercise.html' %}
@@ -168,7 +198,7 @@
 
             <!-- Yoga Tab Content -->
             <div class="tab-pane fade" id="yoga" role="tabpanel" aria-labelledby="yoga-tab">
-                 {% include 'yoga.html' %}
+                {% include 'yoga.html' %}
             </div>
         </div>
     </div>
@@ -179,6 +209,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
+
             // Like button click
             $(".like-button").on("click", function() {
                 var articleId = $(this).data("article-id");
@@ -204,6 +235,7 @@
                 // Perform AJAX request and handle the "unlike" action
             });
         });
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>

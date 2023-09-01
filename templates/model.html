@@ -86,11 +86,11 @@
             <div class="model-card" onclick="selectModel('DialoGPT', this)">
                 <p>DialoGPT</p>
             </div>
-            <div class="model-card" onclick="selectModel('CouncelChat', this)">
-                <p>CouncelChat</p>
+            <div class="model-card" onclick="selectModel('CouncelChatbot', this)">
+                <p>Councel Chatbot</p>
             </div>
-            <div class="model-card" onclick="selectModel('NLP Chatbot', this)">
-                <p>NLP chatbot</p>
+            <div class="model-card" onclick="selectModel('NLPChatbot', this)">
+                <p>NLP Chatbot</p>
             </div>
         </div>
         <div class="description" id="modelDescription">
@@ -109,29 +109,28 @@
             var modelDescription = document.getElementById('modelDescription');
 
             for (var i = 0; i < modelCards.length; i++) {
-            modelCards[i].classList.remove('selected');
+                modelCards[i].classList.remove('selected');
             }
 
-        element.classList.add('selected');
+            element.classList.add('selected');
 
-        if (model === 'ChatGPT') {
-            modelDescription.innerHTML = "<p>ChatGPT is an AI-powered conversational model developed by OpenAI. It's based on a type of technology called \"transformer neural networks.\" These networks are trained on massive amounts of text data to understand language patterns and generate coherent responses.However, the specific details of the on the training data are not disclosed by OpenAI.  But remember, because it learned from so much text, it might sometimes give answers that seem right but might not be completely accurate.</p>";
-        } else if (model === 'Blenderbot') {
-            modelDescription.innerHTML = "<p>BlenderBot is an advanced AI chatbot designed by Facebook. It's trained using a method called \"Reinforcement Learning from Human Feedback (RLHF)\", which allows it to have more natural conversations with users. Unlike other models, BlenderBot can engage in extended discussions, making it feel more like a human partner. However, it may sometimes produce responses that don't fully make sense or might be unrelated, as it relies on patterns it learned from various conversations.</p>";
-        } else if (model === 'DialoGPT') {
-            modelDescription.innerHTML = "<p>DialoGPT is a conversational AI model developed by OpenAI. It's trained on a mix of licensed data, human-generated text, and content from the internet, including Reddit. Using \"transformer neural networks\",' it learns language patterns and context to generate responses in conversations. While it aims to provide accurate answers, its wide training scope means some responses might appear correct but not entirely precise.</p>";
-        } else if (model === 'CouncelChat') {
-            modelDescription.innerHTML = "<p>The chatbot employs advanced techniques such as sentiment analysis, categorization, and response generation to initiate, understand, and guide conversations. Trained on council chat datasets, it assesses user sentiment, classifies queries, utilizes technical algorithms like BERT for response generation, and acknowledges emotions, all while smoothly managing the conversation flow.</p>";
-        } else if (model === 'NLP chatbot') {
-            modelDescription.innerHTML = "<p>NLP chatbot employs techniques such as tokenization, stemming,
-            and bag of words, alongside a neural network, to understand and generate responses.
-            It processes intent data, undergoes model training, and delivers pertinent responses with a measure of confidence.</p>";
-        }
+            if (model === 'ChatGPT') {
+                modelDescription.innerHTML = "<p><strong>ChatGPT</strong> is an AI-powered conversational model developed by <strong>OpenAI</strong>. It's based on a type of technology called <strong>\"transformer neural networks.\"</strong> These networks are trained on massive amounts of text data to understand language patterns and generate coherent responses. However, the specific details of the training data are not disclosed by OpenAI. But remember, because it learned from so much text, it might sometimes give answers that seem right but might not be completely accurate.</p>";
+            } else if (model === 'Blenderbot') {
+                modelDescription.innerHTML = "<p><strong>BlenderBot</strong>is an advanced AI chatbot designed by <strong>Facebook</strong>. It's trained using a method called<strong> \"Reinforcement Learning from Human Feedback (RLHF)\"</strong>, which allows it to have more natural conversations with users. Unlike other models, BlenderBot can engage in extended discussions, making it feel more like a human partner. However, it may sometimes produce responses that don't fully make sense or might be unrelated, as it relies on patterns it learned from various conversations.</p>";
+            } else if (model === 'DialoGPT') {
+                modelDescription.innerHTML = "<p><strong>DialoGPT</strong> is an advanced conversational AI model within the GPT series. Trained on 147 million Reddit-based conversation-like exchanges from 2005 to 2017, DialoGPT uses the <strong>Hugging Face PyTorch transformer architecture</strong>. It achieves near-human performance in single-turn dialogues, generating relevant, content-rich, and contextually consistent responses. While it aims to provide accurate answers, its wide training scope means some responses might appear correct but not entirely precise.</p>";
+            } else if (model === 'CouncelChatbot') {
+                modelDescription.innerHTML = "<p><strong>Councel chatbot</strong> is self made chabot which employs advanced techniques such as <strong>sentiment analysis</>strong>, <strong>categorization, and response generation</>strong> to initiate, understand, and guide conversations. Trained on <strong>council chat datasets</>strong>, it assesses user sentiment, classifies queries, utilizes <strong>technical algorithms like BERT for response generation</>strong>, and acknowledges emotions, all while smoothly managing the conversation flow.</p>";
+            } else if (model === 'NLPChatbot') {
+                modelDescription.innerHTML = "<p><strong>NLP chatbot</strong> is a self made chabot which employs techniques such as <strong>tokenization, stemming, and bag of words, alongside a neural network, to understand and generate responses</>strong>. It processes intent data, undergoes model training, and delivers pertinent responses with a measure of confidence.</p>";
+            }
 
-        // Set the selected model value
+            // Set the selected model value
             var modelInput = document.getElementById('modelInput');
             modelInput.value = model;
         }
+
 
         function proceed() {
         // Get the hidden form and submit it

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #16425B;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 36px;
+            color: #16425B;
+
+        }
+        #logo {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 150px; /* Adjust the width of the logo as needed */
+        }
+        h2, h3 {
+            font-size: 20px;
+            font-weight: normal;
+            color: #2F6690;
+        }
+        .nav-tabs {
+            border-bottom: none;
+        }
+        .nav-link {
+            font-weight: bold;
+            color: #3A7CA5;
+        }
+        .tab-content {
+            padding: 20px 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+
+
+        .body-text {
+            color: #16425B;
+            text-align: left;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <img id="logo" src="{{ url_for('static', filename='MindNexLog.png') }}" alt="MindNex Logo">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Work in progress</h1>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" id="music-tab" data-toggle="tab" href="#music" role="tab" aria-controls="music" aria-selected="false">Music</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="quiz-tab" data-toggle="tab" href="#quiz" role="tab" aria-controls="quiz" aria-selected="false">Quiz</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="game-tab" data-toggle="tab" href="#game" role="tab" aria-controls="game" aria-selected="false">Game</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" id="music" role="tabpanel" aria-labelledby="music-tab">
+             {% include 'music.html' %}
+            </div>
+
+            <!-- Food Tab Content -->
+            <div class="tab-pane fade" id="quiz" role="tabpanel" aria-labelledby="quiz-tab">
+                 {% include 'quiz.html' %}
+            </div>
+
+            <!-- Yoga Tab Content -->
+            <div class="tab-pane fade" id="game" role="tabpanel" aria-labelledby="game-tab">
+                {% include 'game.html' %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

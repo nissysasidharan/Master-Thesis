@@ -191,6 +191,13 @@
             color: blue;
             text-decoration: underline;
         }
+        #logo {
+            position: absolute;
+            top: 80px;
+            left: 10px;
+            width: 180px; /* Adjust the width of the logo as needed */
+            margin-right: 20px;
+        }
     </style>
 </head>
 <body>
@@ -199,9 +206,7 @@
     </div>
 
     <div class="header-container">
-        <div id="logo">
-            <img src="static/MindNexLog.png" alt="MindNexLog">
-        </div>
+        <img id="logo" src="{{ url_for('static', filename='MindNexLog.png') }}" alt="MindNex Logo">
         <div class="page-head">
             <h2>User Experience Assessment</h2>
         </div>

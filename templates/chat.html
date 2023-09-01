@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+</head>
+
+<body>
+    <section class="msger">
+        <header class="msger-header">
+            <div class="msger-header-title">
+                <i class="fas fa-bug"></i> Chatbot <i class="fas fa-bug"></i>
+            </div>
+        </header>
+
+        <main class="msger-chat" id="messages">
+            {% for message in messages %}
+            <div class="msg {{ 'left' if message.side == 'user' else 'right' }}-msg">
+                <div class="msg-img" style="background-image: url({{ message.img }})"></div>
+                <div class="msg-bubble">
+                    <div class="msg-info">
+                        <div class="msg-info-name">{{ message.name }}</div>
+                        <div class="msg-info-time">{{ message.time }}</div>
+                    </div>
+                    <div class="msg-text">{{ message.text }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </main>
+
+        <form class="msger-inputarea" method="POST" action="/chat" id="chatForm">
+            <input type="text" class="msger-input" id="textInput" name="message" placeholder="Enter your message...">
+            <button type="button" class="msger-send-btn" id="sendButton">Send</button>
+        </form>
+
+        <div class="popup" id="popup" style="display: none;">
+            <h2>Do you want to fill the Thought Diary?</h2>
+            <form action="/handle_popup_response" method="POST">
+                <div class="button-container">
+                    <button type="submit" name="popup_response" value="yes">
+                        <i class="fas fa-check"></i> Yes
+                    </button>
+                    <button type="submit" name="popup_response" value="no">
+                        <i class="fas fa-times"></i> No
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        $(document).ready(function () {
+            const BOT_IMG = "/static/imgs/chatbot.png";
+            const PERSON_IMG = "/static/imgs/user.png";
+            const BOT_NAME = "NexBot";
+            const PERSON_NAME = "You";
+
+            const msgerChat = document.querySelector(".msger-chat");
+
+            let lastUserMessage = ""; // Variable to store the last user message
+
+        // Function to toggle the popup's display
+        function togglePopup(show) {
+            var popup = document.getElementById("popup");
+            if (show) {
+                popup.style.display = "block";
+            } else {
+                popup.style.display = "none";
+            }
+        }
+
+        // Add event listener to handle sending message
+        $("#sendButton").click(function () {
+            var userMessage = $("#textInput").val();
+            lastUserMessage = userMessage; // Store the last user message
+            $("#textInput").val("");
+
+            // Append user message to the chat interface
+            appendMessage("left", PERSON_NAME, userMessage);
+
+            // Send user message to the server
+            $.post("/chat", { message: userMessage }, function (data) {
+                var botResponse = data.bot_response;
+
+                // Append bot response to the chat interface
+                appendMessage("right", BOT_NAME, botResponse);
+
+                // After appending the bot response, check if the popup should be shown
+                if (data.show_popup) {
+                    togglePopup(true);  // Show the popup
+                } else {
+                    togglePopup(false); // Hide the popup
+                }
+            });
+        });
+
+
+        $("#noButton").click(function () {
+            var userMessage = "No";  // Assuming you want to add "No" as the user message
+            lastUserMessage = userMessage; // Store the last user message
+
+            // Append user message to the chat interface
+            appendMessage("left", PERSON_NAME, userMessage);
+
+            // Hide the popup
+            togglePopup(false);
+
+            // Scroll to the bottom of the chat to show the latest message
+            msgerChat.scrollTop = msgerChat.scrollHeight;
+        });
+
+
+        // Function to append messages, taking into account the last user message
+        function appendMessage(side, name, text) {
+            const imgSrc = side === "user" ? PERSON_IMG : BOT_IMG;
+            const time = getCurrentTime();
+
+            const messageHTML = `
+                <div class="msg ${side}-msg">
+                    <div class="msg-img" style="background-image: url(${imgSrc})"></div>
+                    <div class="msg-bubble">
+                        <div class="msg-info">
+                            <div class="msg-info-name">${name}</div>
+                            <div class="msg-info-time">${time}</div>
+                        </div>
+                        <div class="msg-text">${text}</div>
+                    </div>
+                </div>
+            `;
+
+            msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+            msgerChat.scrollTop += 500;
+        }
+
+
+        function getCurrentTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            return hours + ":" + minutes;
+        }
+    });
+    </script>
+
+</body>
+
+</html>
