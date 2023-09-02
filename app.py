@@ -1,7 +1,7 @@
 #Imports and Setup
 
 from flask import Flask, render_template, redirect, session, request
-import mysql.connector
+#import mysql.connector
 import secrets
 from config import DATABASE_CONFIG
 from database import RecommendedArticle, RecommendedVideo, RecommendedBook, RecommendedPodcast
@@ -9,8 +9,8 @@ from database import RecommendedArticle, RecommendedVideo, RecommendedBook, Reco
 app = Flask(__name__)
 
 # Create a database connection
-db_connection = mysql.connector.connect(**DATABASE_CONFIG)
-db_cursor = db_connection.cursor()
+#db_connection = mysql.connector.connect(**DATABASE_CONFIG)
+#db_cursor = db_connection.cursor()
 
 # Generate a secure secret key
 secret_key = secrets.token_hex(16)
@@ -31,24 +31,24 @@ def dashboard():
 
 @app.route('/recommendation.html')
 def recommended_articles():
-    db_cursor.execute("SELECT * FROM recommended_articles")
-    recommended_articles_data = db_cursor.fetchall()
+   # db_cursor.execute("SELECT * FROM recommended_articles")
+    #recommended_articles_data = db_cursor.fetchall()
 
-    db_cursor.execute("SELECT * FROM recommended_videos")
-    recommended_videos_data = db_cursor.fetchall()
+    #db_cursor.execute("SELECT * FROM recommended_videos")
+   # recommended_videos_data = db_cursor.fetchall()
 
-    db_cursor.execute("SELECT title,link FROM recommended_books")
-    recommended_books_data = db_cursor.fetchall()
+    #db_cursor.execute("SELECT title,link FROM recommended_books")
+    #recommended_books_data = db_cursor.fetchall()
 
-    db_cursor.execute("SELECT * FROM recommended_podcasts")
-    recommended_podcast_data = db_cursor.fetchall()
+    #db_cursor.execute("SELECT * FROM recommended_podcasts")
+    #recommended_podcast_data = db_cursor.fetchall()
 
     return render_template(
-        'recommendation.html',
-        recommended_articles=recommended_articles_data,
-        recommended_videos=recommended_videos_data,
-        recommended_book=recommended_books_data,
-        recommended_podcast=recommended_podcast_data
+        'recommendation.html'#,
+       # recommended_articles=recommended_articles_data,
+       # recommended_videos=recommended_videos_data,
+       # recommended_book=recommended_books_data,
+       # recommended_podcast=recommended_podcast_data
     )
 
 @app.route('/model.html')
