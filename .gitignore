@@ -8,6 +8,7 @@ __pycache__/
 
 .env
 Capp.py
+myenv
 # Distribution / packaging
 .Python
 build/
