@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Consent Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #16425B;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            font-size: 25px;
+            font-weight: normal;
+            color: #16425B;
+            margin-top: 0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 10px solid #81C3D7;
+            background-color: #D9DCD6;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #D9DCD6;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            color: #3A7CA5;
+        }
+
+        /* Style for buttons */
+        .button-container {
+            text-align: center;
+        }
+
+        .button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #D9DCD6;
+            color: #16425B;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button.accept {
+            background-color: #81C3D7;
+        }
+        .button.close {
+            background-color: #81C3D7;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="openModal()">Open Consent Form</button>
+    <div id="consentModal" class="modal">
+        <div class="modal-content">
+            <h2>Consent Form for Research Participation</h2>
+            <p>We hosted this Web application for research on mental health chatbots. Hence, all the data collected as part of this would be used for research purposes.</p>
+
+            <p>Your participation in this study is voluntary, and before you decide whether or not to participate, it is important that you understand why the research is being conducted and what it will involve.</p>
+
+
+            <p><strong>Consent</strong></p>
+            <p>By proceeding with the study, you acknowledge that you have read and understood this consent form and that you voluntarily agree to participate in the research.</p>
+            <p>You are free to decline participation or withdraw at any time without any consequences.</p>
+
+            <p><em>Your agreement serves as your informed and voluntary consent to participate in this research study.</em></p>
+
+            <div class="button-container">
+                <button class="button" onclick="closeModal()">Close</button>
+                <button class="button accept" onclick="accept()">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("consentModal");
+
+        // Function to open the modal
+        function openModal() {
+            modal.style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Function to accept the consent
+        function accept() {
+            alert("You have accepted the consent.");
+            closeModal(); // Close the modal after accepting
+        }
+    </script>
+</body>
+</html>

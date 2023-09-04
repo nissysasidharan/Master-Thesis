@@ -214,16 +214,18 @@
         growth and transformation.<br><br>
         Join us in shaping a supportive and mentally healthy world through the power of CBT
         thought diary practices"<br><br>
+    <p>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for message in messages %}
+                        <li class="{{ message[1] }}" style="color: #81C3D7; font-weight: bold; font-size: 50px;">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
     </p>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class="flash-messages">
-            {% for message in messages %}
-            <li class="{{ message[1] }}">{{ message}}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    {% endwith %}
+
     <div class="contact-button">
         <button onclick="window.location.href='mailto:mindnexuswebsite@gmail.com'">Contact <i
                 class="fas fa-envelope"></i></button>

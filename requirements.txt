@@ -7,4 +7,6 @@ bcrypt
 transformers
 torch
 tensorflow
+pymysql
+
 
