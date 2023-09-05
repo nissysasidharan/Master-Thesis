@@ -1,19 +1,23 @@
 from flask import Flask, render_template, redirect, session, request, flash
-import mysql.connector
+from database import db, init_db, create_user, Users
 import secrets
 from config import DATABASE_CONFIG
-from database import RecommendedArticle, RecommendedVideo, RecommendedBook, RecommendedPodcast, Users
+
+
 
 app = Flask(__name__)
+# Set the SQLALCHEMY_DATABASE_URI using the configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f"mysql://{DATABASE_CONFIG['user']}:{DATABASE_CONFIG['password']}@{DATABASE_CONFIG['host']}/{DATABASE_CONFIG['database']}"
+)
 
-# Create a database connection
-db_connection = mysql.connector.connect(**DATABASE_CONFIG)
-db_cursor = db_connection.cursor()
 
 # Generate a secure secret key
 secret_key = secrets.token_hex(16)
 app.secret_key = secret_key
 
+# Initialize the database with the app
+init_db(app)
 
 @app.route('/')
 def index():
@@ -21,15 +25,14 @@ def index():
 
 def create_user(username, email, password):
     try:
-        # Assuming you have a Users table with columns: username, email, password
-        query = "INSERT INTO Users (username, email, password) VALUES (%s, %s, %s)"
-        values = (username, email, password)
-        db_cursor.execute(query, values)
-        db_connection.commit()
+        user = Users(username=username, email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
         return True  # User created successfully
     except Exception as error:
         print(f"Error creating user: {error}")
         return False  # Error creating user
+
 
 @app.route("/create_user", methods=["GET", "POST"])
 def create_user_route():
@@ -40,7 +43,7 @@ def create_user_route():
         email = request.form["email"]
         password = request.form["password"]
 
-        # Call the function to create the user in the database (using database.py)
+        # Call the function to create the user in the database
         if create_user(username, email, password):
             # If user creation is successful, redirect to the dashboard
             session['username'] = username

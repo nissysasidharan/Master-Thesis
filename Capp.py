@@ -4,7 +4,7 @@ from flask import Flask, render_template, redirect, session, request, flash
 #import mysql.connector
 import secrets
 from config import DATABASE_CONFIG
-from database import RecommendedArticle, RecommendedVideo, RecommendedBook, RecommendedPodcast, Users
+from Cdatabase import RecommendedArticle, RecommendedVideo, RecommendedBook, RecommendedPodcast, Users
 
 app = Flask(__name__)
 
@@ -40,7 +40,7 @@ def create_user_route():
         email = request.form["email"]
         password = request.form["password"]
 
-        # Call the function to create the user in the database (using database.py)
+        # Call the function to create the user in the database (using Cdatabase.py)
         if create_user(username, email, password):
             # If user creation is successful, redirect to the dashboard
             session['username'] = username
