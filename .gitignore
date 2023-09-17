@@ -5,11 +5,12 @@ __pycache__/
 
 # C extensions
 *.so
-
+config.py
 .env
 Capp.py
 myenv
 # Distribution / packaging
+data/
 .Python
 build/
 develop-eggs/

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thought Diary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F4F4F4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #16425B;
+            margin-top: 0;
+        }
+
+        .thought-diary-container {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #AAAAAA;
+        }
+
+        .button-container {
+            background-color: #2F6690;
+            color: #FFFFFF;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #87cef;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-submit {
+        background-color: #81C3D7;
+        color: #FFFFFF;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        }
+         table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #AAAAAA;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thought Diary</h1>
+
+    <div class="tab-content">
+        <!-- Thought Diary Tab Content -->
+        <div class="tab-pane fade show active" id="thoughtDiary">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date/Time</th>
+                        <th>Situation</th>
+                        <th>Automatic Thought(s)</th>
+                        <th>Emotion(s)</th>
+                        <th>Adaptive Response</th>
+                        <th>Outcome</th>
+                    </tr>
+                </thead>
+                <tbody id="thought-diary-table-body">
+                    {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry.date }}</td>
+                        <td>{{ entry.situation }}</td>
+                        <td>{{ entry.automatic_thoughts }}</td>
+                        <td>{{ entry.emotions }}</td>
+                        <td>{{ entry.adaptive_response }}</td>
+                        <td>{{ entry.outcome }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Form for Adding Thought Entry (Outside of Tabs) -->
+    <form action="/add_thought_entry" method="POST">
+        <table>
+            <!-- Form Fields -->
+        </table>
+        <div class="button-container">
+            <button class="btn-submit" type="submit">Add Thought Entry</button>
+        </div>
+    </form>
+</body>

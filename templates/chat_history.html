@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindNex</title>
+    <title>MindNex Dashboard</title>
     <style>
-        /* CSS styles here */
+        /* Add your CSS styles here */
         body {
             font-family: Arial, sans-serif;
             background-color: #F4F4F4;
@@ -17,38 +17,32 @@
             font-size: 24px;
             font-weight: bold;
             color: #16425B;
-            margin-top: 0;
         }
 
-        .tab-navigation {
-            margin-bottom: 20px;
-        }
-
-        .tab-button {
-            background-color: #3A7CA5;
-            color: #ffffff;
-            border: none;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .tab-button:hover {
-            background-color: #81C3D7;
-        }
-
-        .tab-content {
+        .tab {
             display: none;
         }
 
-        .thought-diary-container {
-            margin-top: 20px;
+        .active-tab {
+            display: block;
+        }
+
+        ul.tab-navigation {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul.tab-navigation li {
+            display: inline;
+            margin-right: 10px;
+            cursor: pointer;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
 
         th, td {
@@ -56,311 +50,84 @@
             text-align: left;
             border-bottom: 1px solid #AAAAAA;
         }
-
-        .button-container {
-            background-color: #2F6690;
-            color: #FFFFFF;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .btn-submit {
-            background-color: #81C3D7;
-            color: #FFFFFF;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .chart-container {
-            height: 400px;
-            width: 500px;
-            margin: 20px auto;
-        }
-        .sentiment-chart-container {
-            height: 400px; /* Adjust the height for sentiment chart */
-            width: 500px;  /* Adjust the width as needed */
-            margin: 20px auto;
-        }
-
-
-
     </style>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="tab-container">
-    <!-- Tab navigation -->
-    <div class="tab-navigation">
-        <button class="tab-button" onclick="openTab('thought-diary')">Thought Diary</button>
-        <button class="tab-button" onclick="openTab('mood-tracker')">Mood Tracker</button>
-        <button class="tab-button" onclick="openTab('emotional-analysis')">Emotional Analysis</button>
-        <button class="tab-button" onclick="openTab('chat-summary')">Chat Summary</button>
-    </div>
-    <div class="tab-content" id="thought-diary">
-    <!-- Thought Diary content -->
-        <div class="thought-diary-container">
-            <h1>Thought Diary</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date/Time</th>
-                        <th>Situation</th>
-                        <th>Automatic Thought(s)</th>
-                        <th>Emotion(s)</th>
-                        <th>Adaptive Response</th>
-                        <th>Outcome</th>
-                    </tr>
-                </thead>
-                <tbody id="thought-diary-table-body">
-                    {% for entry in thought_entries %}
-                    <tr>
-                        <td>{{ entry.date }}</td>
-                        <td>{{ entry.situation }}</td>
-                        <td>{{ entry.automatic_thoughts }}</td>
-                        <td>{{ entry.emotions }}</td>
-                        <td>{{ entry.adaptive_response }}</td>
-                        <td>{{ entry.outcome }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <h1>MindNex Dashboard</h1>
 
-            <form action="/add_thought_entry" method="POST">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <input type="text" name="date" value="{{ current_date }}" placeholder="Date">
-                            </td>
-                            <td>
-                                <input type="text" name="situation" placeholder="Situation">
-                            </td>
-                            <td>
-                                <input type="text" name="automatic_thoughts" placeholder="Automatic Thoughts">
-                            </td>
-                            <td>
-                                <input type="text" name="emotions" placeholder="Emotions">
-                            </td>
-                            <td>
-                                <input type="text" name="adaptive_response" placeholder="Adaptive Response">
-                            </td>
-                            <td>
-                                <input type="text" name="outcome" placeholder="Outcome">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <!-- Tab Navigation -->
+    <ul class="tab-navigation">
+        <li onclick="showTab('thought-tab')">Thought Diary</li>
+        <li onclick="showTab('emotion-tab')">Emotion Analysis</li>
+        <li onclick="showTab('mood-tab')">Mood Tracker</li>
+    </ul>
 
-                <div class="button-container">
-                    <button class="btn-submit" type="submit">Add Thought Entry</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="tab-content" id="mood-tracker">
-        <h1>Mood Tracker Line Chart</h1>
-        <div>
-            <label for="date-dropdown">Select Date:</label>
-            <select id="date-dropdown">
-            </select>
-        </div>
-        <div id="line-chart">
-            <!-- Placeholder for the Plotly line chart -->
-        </div>
-    </div>
-
-    <div class="tab-content" id="emotional-analysis">
-        <div>
-            <h1>Emotional Analysis</h1>
-            <h2>Select a Response:</h2>
-            <select id="responseDropdown" onchange="updateEmotionalAnalysis()">
-                <option value="">Select Response</option>
-                {% for response in responses %}
-                <option value="{{ response }}">{{ response }}</option>
+    <!-- Thought Diary Tab -->
+    <div id="thought-tab" class="tab active-tab">
+        <h2>Thought Diary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date/Time</th>
+                    <th>Situation</th>
+                    <th>Automatic Thought(s)</th>
+                    <th>Emotion(s)</th>
+                    <th>Adaptive Response</th>
+                    <th>Outcome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through Thought Diary entries and populate the table -->
+                {% for entry in thought_entries %}
+                <tr>
+                    <td>{{ entry.date }}</td>
+                    <td>{{ entry.situation }}</td>
+                    <td>{{ entry.automatic_thoughts }}</td>
+                    <td>{{ entry.emotions }}</td>
+                    <td>{{ entry.adaptive_response }}</td>
+                    <td>{{ entry.outcome }}</td>
+                </tr>
                 {% endfor %}
-            </select>
-            <div class="chart-container">
-                <canvas id="emotionalAnalysisChart"></canvas>
-            </div>
-        </div>
+            </tbody>
+        </table>
     </div>
-    <div class="tab-content" id="chat-summary">
-    <!-- Chat Summary content -->
-        <div class="chat-summary-container">
-            <h1>Chat Summary</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Chat Summary</th>
-                    </tr>
-                </thead>
-                <tbody id="chat-summary-table-body">
-                    {% for summary in summaries %}
-                    <tr>
-                        <td>{{ summary.date }}</td>
-                        <td>{{ summary.chat_summary }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+
+    <!-- Emotion Analysis Tab -->
+    <div id="emotion-tab" class="tab">
+        <h2>Emotion Analysis</h2>
+        <label for="responseDropdown">Select a Response:</label>
+        <select id="responseDropdown">
+            <!-- Loop through Emotion Analysis data and populate the dropdown -->
+            {% for emotion in emotion_data %}
+            <option value="{{ emotion }}">{{ emotion }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Mood Tracker Tab -->
+    <div id="mood-tab" class="tab">
+        <h2>Mood Tracker</h2>
+        <label for="responseDropdown">Select a date:</label>
+        <select id="responseDropdown">
+            <!-- Loop through Emotion Analysis data and populate the dropdown -->
+            {% for entry in mood_tracker_data %}
+            <option value="{{ entry }}">{{ entry }}</option>
+            {% endfor %}
+        </select>
     </div>
 
     <script>
+        function showTab(tabId) {
+            // Hide all tabs
+            var tabs = document.getElementsByClassName("tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active-tab");
+            }
 
-    document.addEventListener("DOMContentLoaded", function() {
-        fetch('/get_sentiment_data')
-            .then(response => response.json())
-            .then(data => {
-                // Iterate over data and populate dropdown options
-                var dateDropdown = document.getElementById('date-dropdown');
-                data.forEach(item => {
-                    var option = document.createElement('option');
-                    option.value = item.date;
-                    option.text = formatDate(new Date(item.date)); // Format the date
-                    dateDropdown.appendChild(option);
-                });
-
-                // Function to format date in DD-MM-YYYY format
-                function formatDate(date) {
-                    var dd = String(date.getDate()).padStart(2, '0');
-                    var mm = String(date.getMonth() + 1).padStart(2, '0');
-                    var yyyy = date.getFullYear();
-                    return dd + '-' + mm + '-' + yyyy;
-                }
-
-                // Function to update line chart based on selected date
-                function updateLineChart(selectedData) {
-                    var sentiments = selectedData.sentiments.map(Number); // Convert to numbers
-                    var messageIds = selectedData.message_ids;
-
-                    var trace = {
-                        x: messageIds,
-                        y: sentiments,
-                        mode: 'lines+markers',  // Adding markers to better visualize individual points
-                        type: 'scatter',
-                        name: 'Sentiment',
-                    };
-                    var layout = {
-                        title: 'Sentiment Chart for ' + formatDate(new Date(selectedData.date)), // Format the date
-                        xaxis: { title: 'Message ID' },
-                        yaxis: { title: 'Sentiment Score', range: [-1, 1] },  // Set y-axis range for -1 to 1
-                    };
-                    Plotly.newPlot('line-chart', [trace], layout);
-                }
-
-                // Add event listener to the dropdown
-                document.getElementById('date-dropdown').addEventListener('change', function() {
-                    var selectedDate = this.value;
-                    var selectedData = data.find(item => item.date === selectedDate);
-                    if (selectedData) {
-                        updateLineChart(selectedData);
-                    } else {
-                        console.log("Data for selected date not available.");
-                    }
-                });
-
-                // Initialize chart with the first data entry
-                if (data.length > 0) {
-                    updateLineChart(data[0]);
-                }
-            });
-    });
-
-    function updateEmotionalAnalysis() {
-        const selectedResponse = document.getElementById('responseDropdown').value;
-
-        fetch('/update_emotional_analysis', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ response: selectedResponse }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                const emotionsLabels = data.emotions_labels;
-                const emotionsScore = data.emotions_scores;
-
-                const config = {
-                    type: 'bar',
-                    data: {
-                        labels: emotionsLabels,
-                        datasets: [{
-                            label: 'Emotion Score',
-                            data: emotionsScore,
-                            backgroundColor: 'rgba(54, 162, 235, 0.8)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                suggestedMax: 1, // Adjust the maximum value on the y-axis as needed
-                                ticks: {
-                                    stepSize: 0.2 // Adjust the step size for the y-axis ticks as needed
-                                }
-                            }
-                        }
-                    }
-                };
-
-                const chartContainer = document.getElementById('emotionalAnalysisChart');
-                const oldChart = Chart.getChart(chartContainer);
-
-                if (oldChart) {
-                    oldChart.destroy();
-                }
-
-                new Chart(chartContainer, config);
-            })
-            .catch(error => console.error('Error:', error));
-    }
-
-    function addThoughtEntry() {
-        var dateTime = prompt("Enter the date and time:");
-        var situation = prompt("Describe the situation:");
-        var automaticThought = prompt("Enter the automatic thought(s):");
-        var emotions = prompt("Enter the emotion(s):");
-        var adaptiveResponse = prompt("Enter the adaptive response:");
-        var outcome = prompt("Enter the outcome:");
-
-        var tableBody = document.getElementById("thought-diary-table-body");
-        var newRow = tableBody.insertRow();
-
-        newRow.innerHTML = `
-            <td>${dateTime}</td>
-            <td>${situation}</td>
-            <td>${automaticThought}</td>
-            <td>${emotions}</td>
-            <td>${adaptiveResponse}</td>
-            <td>${outcome}</td>
-        `;
-    }
-
-    function openTab(tabId) {
-        const tabContents = document.getElementsByClassName('tab-content');
-        for (let i = 0; i < tabContents.length; i++) {
-            tabContents[i].style.display = 'none';
+            // Show the selected tab
+            document.getElementById(tabId).classList.add("active-tab");
         }
-
-        document.getElementById(tabId).style.display = 'block';
-
-        if (tabId === 'mood-tracker') {
-            updateLineChart(data[0]); // You'll need to define this function if not already defined
-        } else if (tabId === 'emotional-analysis') {
-            updateEmotionalAnalysis(); // Call the function to update emotional analysis
-        }
-    }
-
     </script>
+
 </body>
 </html>

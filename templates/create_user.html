@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Create User Form -->
+    <div class="container">
+        <h2>Create User</h2>
+        <form id="create-user-form" method="POST" action="/create_user">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+            </div>
+
+            <!-- Consent Button -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#consentModal">
+                Open Consent Form
+            </button>
+
+            <!-- Create User Button (disabled by default) -->
+            <button type="submit" class="btn btn-success" id="create-button" disabled>Create User</button>
+        </form>
+    </div>
+
+    <!-- Consent Form Modal -->
+    <div class="modal fade" id="consentModal" tabindex="-1" aria-labelledby="consentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="consentModalLabel">Consent Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>We hosted this Web application for research on mental health chatbots. All data collected will be used for research purposes.</p>
+                    <p>Your participation is voluntary, and you can decline or withdraw at any time without consequences.</p>
+                    <p>By proceeding, you agree to the terms outlined in the consent form.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="accept-consent">Accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to enable Create User button when consent is accepted -->
+    <script>
+        // Enable Create User button when consent is accepted
+        document.getElementById('accept-consent').addEventListener('click', function () {
+            document.getElementById('create-button').disabled = false;
+            $('#consentModal').modal('hide'); // Close the consent modal
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thought Diary</title>
+    <!-- Add any CSS styles or external stylesheet links here if needed -->
+</head>
+<body>
+    <h1>Thought Diary</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Date/Time</th>
+                <th>Situation</th>
+                <th>Automatic Thought(s)</th>
+                <th>Emotion(s)</th>
+                <th>Adaptive Response</th>
+                <th>Outcome</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+            <tr>
+                <td>{{ entry.date }}</td>
+                <td>{{ entry.situation }}</td>
+                <td>{{ entry.automatic_thoughts }}</td>
+                <td>{{ entry.emotions }}</td>
+                <td>{{ entry.adaptive_response }}</td>
+                <td>{{ entry.outcome }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Your form for adding thought entries can be added here -->
+    <form action="/add_thought_entry" method="POST">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="text" name="date" placeholder="Date">
+                    </td>
+                    <td>
+                        <input type="text" name="situation" placeholder="Situation">
+                    </td>
+                    <td>
+                        <input type="text" name="automatic_thoughts" placeholder="Automatic Thoughts">
+                    </td>
+                    <td>
+                        <input type="text" name="emotions" placeholder="Emotions">
+                    </td>
+                    <td>
+                        <input type="text" name="adaptive_response" placeholder="Adaptive Response">
+                    </td>
+                    <td>
+                        <input type="text" name="outcome" placeholder="Outcome">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="button-container">
+            <button class="btn-submit" type="submit">Add Thought Entry</button>
+        </div>
+    </form>
+
+    <!-- Add any JavaScript scripts here if needed -->
+
+</body>
+</html>

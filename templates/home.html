@@ -20,12 +20,9 @@
             padding: 20px;
             background-color: #D9DCD6;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;/* Center align the buttons */
-            position: relative;/* Add position relative for button positioning */
+            text-align: center;
+            position: relative;
         }
-
-
-
 
         .bodytext {
             color: #2F6690;
@@ -117,20 +114,20 @@
 
         .icon-container {
             margin: 0 20px;
-            border-right: 1px solid #2F6690;/* Add this line to create the vertical line */
-            padding-right: 20px;/* Add padding to separate the line from the icon */
+            border-right: 1px solid #2F6690;
+            padding-right: 20px;
         }
 
         .icon-container:last-child {
-            border-right: none;/* Remove the border on the last icon-container */
-            padding-right: 0;/* Remove the padding on the last icon-container */
+            border-right: none;
+            padding-right: 0;
         }
 
         .links {
             display: flex;
             justify-content: flex-end;
             margin-top: 10px;
-            gap: 10px;/* Add this line to create a space between the links */
+            gap: 10px;
         }
 
         .create-link {
@@ -146,7 +143,7 @@
         position: absolute;
         top: 0px;
         left: 0px;
-        width: 230px; /* Adjust the width of the logo as needed */
+        width: 230px;
         }
         #banner {
             top: 250px;
@@ -197,7 +194,11 @@
             // Redirect to the dashboard.html page
             window.location.href = 'dashboard.html';
         }
-
+        function openConsentForm() {
+            // Define a modal for the consent form
+            var consentModal = new bootstrap.Modal(document.getElementById('openConsentForm'));
+            consentModal.show();
+        }
     </script>
 </head>
 
@@ -205,8 +206,10 @@
 <div id="container">
     <h1>MindNex</h1>
     <h2>Explore the nexus of mind and potential</h2>
+
     <img id="logo" src="{{ url_for('static', filename='MindNexLog.png') }}" alt="MindNex Logo">
     <img id="banner" src="{{ url_for('static', filename='imgs/home.jpg') }}" alt="Banner Image">
+
     <h2>About MindNex</h2>
     <p class="bodytext">
         "We believe in the power of small initiatives and Cognitive Behavioral Therapy (CBT)
@@ -237,6 +240,7 @@
             <button type="submit">Login</button>
             <div class="links">
                 <a class="create-link" href="#" data-bs-toggle="modal" data-bs-target="#createUserModal">Create User</a>
+                <a class="consent-link" href="#" data-bs-toggle="modal" data-bs-target="#openConsentForm">Consent Form</a>
             </div>
         </form>
     </div>
@@ -292,6 +296,27 @@
     </div>
 </div>
 
+<!-- Consent Form Modal -->
+<div class="modal fade" id="openConsentForm" tabindex="-1" aria-labelledby="openConsentFormLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Use modal-lg for a larger modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="consentModalLabel">Consent Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>We hosted this Web application for research on mental health chatbots. All data collected will be used for research purposes.</p>
+                <p>We assure you none of the collected data will be shared publically or any media.</p>
+                <p>Your participation is voluntary, and you can decline or withdraw at any time without consequences.</p>
+                <p>By proceeding, you agree to the terms outlined in the consent form.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="accept-consent">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

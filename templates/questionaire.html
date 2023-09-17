@@ -250,14 +250,13 @@
                 </form>
             </div>
         </div>
-
         <div class="container desp">
             <div class="container-img img-part-2"></div>
             <div class="container-desp">
                 <h2>Part 2: Chatbot Interaction and CBT Techniques</h2>
                 <form method="post" action="/interaction">
                     <!-- ... -->
-                    <label for="chatbot-interaction">5. How often have you used chatbots for mental health support?</label>
+                    <label for="chatbot-interaction">5. How often do you believe you need mental health support?</label>
                     <select id="chatbot-interaction" name="chatbot-interaction">
                         <option value="never">Never</option>
                         <option value="rarely">Rarely</option>
@@ -272,12 +271,14 @@
                     <input type="radio" id="cbt-no" name="cbt-techniques" value="no" checked>
                     <label for="cbt-no">No</label><br><br>
 
-                    <label for="favorite-techniques">7. If yes, what are your favorite CBT techniques? (You can select
-                        multiple)</label>
-                    <input type="checkbox" id="technique1" name="favorite-techniques" value="technique1">
-                    <label for="technique1">Technique 1</label>
-                    <input type="checkbox" id="technique2" name="favorite-techniques" value="technique2" checked>
-                    <label for="technique2">Technique 2</label>
+                    <label for="favorite-techniques">7. If yes, what are your favorite CBT techniques? (You can select multiple)</label>
+                    <input type="checkbox" id="technique1" name="favorite-techniques" value="Identifying Cognitive Distortions">
+                    <label for="technique1">Identifying Cognitive Distortions</label>
+                    <input type="checkbox" id="technique2" name="favorite-techniques" value="Filling Thought Diary" checked>
+                    <label for="technique2">Filling Thought Diary</label>
+                    <input type="checkbox" id="technique3" name="favorite-techniques" value="Positive thoughts affirmation">
+                    <label for="technique3">Positive thoughts affirmation</label>
+
                     <!-- Add more checkboxes as needed -->
                     <br><br>
 
@@ -426,32 +427,60 @@
             <div class="container-desp">
                 <h2>Part 6: Chatbot Model Effectiveness Assessment</h2>
                 <form method="post" action="/chatbotmodel">
-                    <p>21. Among the chatbot models you interacted with, which one did you find to be more effective in
-                        providing mental health support?</p>
+                    <p>21. Among the chatbot models you interacted with, please rank them based on their effectiveness in providing mental health support (1 being the best and 5 being the worst).</p>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="chatbotModel" value="ChatGPT" checked> ChatGPT
+                            ChatGPT
+                            <input type="radio" name="ChatGPT_rating" value="1"> 1
+                            <input type="radio" name="ChatGPT_rating" value="2"> 2
+                            <input type="radio" name="ChatGPT_rating" value="3"> 3
+                            <input type="radio" name="ChatGPT_rating" value="4"> 4
+                            <input type="radio" name="ChatGPT_rating" value="5"> 5
                         </label>
                         <br>
                         <label>
-                            <input type="radio" name="chatbotModel" value="BlenderBot"> BlenderBot
+                            BlenderBot
+                            <input type="radio" name="BlenderBot_rating" value="1"> 1
+                            <input type="radio" name="BlenderBot_rating" value="2"> 2
+                            <input type="radio" name="BlenderBot_rating" value="3"> 3
+                            <input type="radio" name="BlenderBot_rating" value="4"> 4
+                            <input type="radio" name="BlenderBot_rating" value="5"> 5
                         </label>
-                        <br>
                         <label>
-                            <input type="radio" name="chatbotModel" value="DialogPT"> DialogPT
+                            BlenderBot
+                            <input type="radio" name="BlenderBot_rating" value="1"> 1
+                            <input type="radio" name="BlenderBot_rating" value="2"> 2
+                            <input type="radio" name="BlenderBot_rating" value="3"> 3
+                            <input type="radio" name="BlenderBot_rating" value="4"> 4
+                            <input type="radio" name="BlenderBot_rating" value="5"> 5
                         </label>
-                        <br>
                         <label>
-                            <input type="radio" name="chatbotModel" value="NLPModel"> NLP Model
+                            Dialogpt
+                            <input type="radio" name="BlenderBot_rating" value="1"> 1
+                            <input type="radio" name="BlenderBot_rating" value="2"> 2
+                            <input type="radio" name="BlenderBot_rating" value="3"> 3
+                            <input type="radio" name="BlenderBot_rating" value="4"> 4
+                            <input type="radio" name="BlenderBot_rating" value="5"> 5
                         </label>
-                        <br>
                         <label>
-                            <input type="radio" name="chatbotModel" value="CounselChatModel"> Counsel Chat Model
+                            NLP chatmodel
+                            <input type="radio" name="BlenderBot_rating" value="1"> 1
+                            <input type="radio" name="BlenderBot_rating" value="2"> 2
+                            <input type="radio" name="BlenderBot_rating" value="3"> 3
+                            <input type="radio" name="BlenderBot_rating" value="4"> 4
+                            <input type="radio" name="BlenderBot_rating" value="5"> 5
                         </label>
+                        <label>
+                            Councel Chat
+                            <input type="radio" name="BlenderBot_rating" value="1"> 1
+                            <input type="radio" name="BlenderBot_rating" value="2"> 2
+                            <input type="radio" name="BlenderBot_rating" value="3"> 3
+                            <input type="radio" name="BlenderBot_rating" value="4"> 4
+                            <input type="radio" name="BlenderBot_rating" value="5"> 5
+                        </label>
+                        <!-- Add similar sections for other chatbot models -->
                     </div>
-
-
-                    <p>22. Based on the model you selected, please rate the following statements regarding your chatbot
+                    <p>22. Based on the best model you selected, please rate the following statements regarding your chatbot
                         interaction experience:</p>
                     <label for="scope-purpose-ui">a. The chatbot's personality was engaging and relatable.</label>
                     <select id="scope-purpose-ui" name="personality" maxlength="255">
@@ -761,5 +790,4 @@
 
 
 </body>
-
 </html>

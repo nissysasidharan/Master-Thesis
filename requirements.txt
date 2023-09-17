@@ -10,3 +10,13 @@ tensorflow
 pymysql
 Flask-Bcrypt
 mysqlclient
+openai
+pandas
+scikit-learn
+nltk
+sentence-transformers
+vaderSentiment
+matplotlib
+wordcloud
+
+
