@@ -218,7 +218,7 @@
             <div class="container-img img-part-1"></div>
             <div class="container-desp">
                 <h2>Part 1: Demographic Information</h2>
-                <form method="post" action="/demographic">
+                <form method="post" action="/ademographic">
                     <label for="age">1. Age:</label>
                     <input type="number" id="age" name="age" value="20" required><br><br>
 
@@ -254,10 +254,10 @@
             <div class="container-img img-part-2"></div>
             <div class="container-desp">
                 <h2>Part 2: Chatbot Interaction and CBT Techniques</h2>
-                <form method="post" action="/interaction">
+                <form method="post" action="/ainteraction">
                     <!-- ... -->
-                    <label for="chatbot-interaction">5. How often do you believe you need mental health support?</label>
-                    <select id="chatbot-interaction" name="chatbot-interaction">
+                    <label for="require_mh_support">5. How often do you believe you need mental health support?</label>
+                    <select id="require_mh_support" name="require_mh_support">
                         <option value="never">Never</option>
                         <option value="rarely">Rarely</option>
                         <option value="sometimes">Sometimes</option>
@@ -293,7 +293,7 @@
             <div class="container-img img-part-3"></div>
             <div class="container-desp">
                 <h2>Part 3: Privacy and Trust Assessment</h2>
-                <form method="post" action="/privacy">
+                <form method="post" action="/aprivacy">
                     <label for="personal-info-sharing">10. On a scale of 1 to 5, how comfortable are you sharing personal
                         information (e.g., emotions, thoughts) with the chatbot?</label>
                     <select id="personal-info-sharing" name="personal-info-sharing">
@@ -333,7 +333,7 @@
             <div class="container-img img-part-4"></div>
             <div class="container-desp">
                 <h2>Part 4: Recommendation Relevance Assessment</h2>
-                <form method="post" action="/recommendation">
+                <form method="post" action="/arecommendation">
                     <label for="tried-recommendations">13. Have you ever worked with or tried any of the recommendations
                         provided by the chatbot before?</label>
                     <input type="radio" id="tried-yes" name="tried-recommendations" value="yes">
@@ -366,7 +366,7 @@
             <div class="container-img img-part-5"></div>
             <div class="container-desp">
                 <h2>Part 5: User Interface and Experience Assessment</h2>
-                <form method="post" action="/uiexperience">
+                <form method="post" action="/auiexperience">
                     <label for="satisfaction-ui">16. How satisfied were you with the chatbot's user interface and
                         interactions?</label>
                     <select id="satisfaction-ui" name="satisfaction-ui">
@@ -426,7 +426,7 @@
             <div class="container-img img-part-6"></div>
             <div class="container-desp">
                 <h2>Part 6: Chatbot Model Effectiveness Assessment</h2>
-                <form method="post" action="/chatbotmodel">
+                <form method="post" action="/achatbotmodel">
                     <p>21. Among the chatbot models you interacted with, please rank them based on their effectiveness in providing mental health support (1 being the best and 5 being the worst).</p>
                     <div class="radio">
                         <label>
@@ -447,36 +447,28 @@
                             <input type="radio" name="BlenderBot_rating" value="5"> 5
                         </label>
                         <label>
-                            BlenderBot
-                            <input type="radio" name="BlenderBot_rating" value="1"> 1
-                            <input type="radio" name="BlenderBot_rating" value="2"> 2
-                            <input type="radio" name="BlenderBot_rating" value="3"> 3
-                            <input type="radio" name="BlenderBot_rating" value="4"> 4
-                            <input type="radio" name="BlenderBot_rating" value="5"> 5
-                        </label>
-                        <label>
                             Dialogpt
-                            <input type="radio" name="BlenderBot_rating" value="1"> 1
-                            <input type="radio" name="BlenderBot_rating" value="2"> 2
-                            <input type="radio" name="BlenderBot_rating" value="3"> 3
-                            <input type="radio" name="BlenderBot_rating" value="4"> 4
-                            <input type="radio" name="BlenderBot_rating" value="5"> 5
+                            <input type="radio" name="Dialogpt_rating" value="1"> 1
+                            <input type="radio" name="Dialogpt_rating" value="2"> 2
+                            <input type="radio" name="Dialogpt_rating" value="3"> 3
+                            <input type="radio" name="Dialogpt_rating" value="4"> 4
+                            <input type="radio" name="Dialogpt_rating" value="5"> 5
                         </label>
                         <label>
                             NLP chatmodel
-                            <input type="radio" name="BlenderBot_rating" value="1"> 1
-                            <input type="radio" name="BlenderBot_rating" value="2"> 2
-                            <input type="radio" name="BlenderBot_rating" value="3"> 3
-                            <input type="radio" name="BlenderBot_rating" value="4"> 4
-                            <input type="radio" name="BlenderBot_rating" value="5"> 5
+                            <input type="radio" name="NLPModel_rating" value="1"> 1
+                            <input type="radio" name="NLPModel_rating" value="2"> 2
+                            <input type="radio" name="NLPModel_rating" value="3"> 3
+                            <input type="radio" name="NLPModel_rating" value="4"> 4
+                            <input type="radio" name="NLPModel_rating" value="5"> 5
                         </label>
                         <label>
                             Councel Chat
-                            <input type="radio" name="BlenderBot_rating" value="1"> 1
-                            <input type="radio" name="BlenderBot_rating" value="2"> 2
-                            <input type="radio" name="BlenderBot_rating" value="3"> 3
-                            <input type="radio" name="BlenderBot_rating" value="4"> 4
-                            <input type="radio" name="BlenderBot_rating" value="5"> 5
+                            <input type="radio" name="CounselChatModel_rating" value="1"> 1
+                            <input type="radio" name="CounselChatModel_rating" value="2"> 2
+                            <input type="radio" name="CounselChatModel_rating" value="3"> 3
+                            <input type="radio" name="CounselChatModel_rating" value="4"> 4
+                            <input type="radio" name="CounselChatModel_rating" value="5"> 5
                         </label>
                         <!-- Add similar sections for other chatbot models -->
                     </div>
@@ -541,7 +533,7 @@
             <div class="container-img img-part-7"></div>
             <div class="container-desp">
                 <h2>Part 7: Emotional Experience Assessment (PANAS)</h2>
-                <form method="post" action="/emotional">
+                <form method="post" action="/aemotional">
                     <!-- First Row -->
                     <div class="row">
                         <div class="question" style="display: inline-block;">
@@ -775,7 +767,7 @@
             <div class="container-img img-part-8"></div>
             <div class="container-desp">
                 <h2>Part 8: Open-Ended Feedback</h2>
-                <form method="post" action="/feedback">
+                <form method="post" action="/afeedback">
                     <p>26. Please provide any additional comments or feedback about your experience using the chatbot's UI,
                         CBT techniques implemented, privacy and trust, recommendation relevance, or any other
                         functionality.</p>

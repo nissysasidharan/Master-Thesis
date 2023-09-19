@@ -204,20 +204,24 @@ class AssessmentModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255))
-    chatbot_model = db.Column(db.String)
-    personality_engaging = db.Column(db.Integer)
-    responses_clear = db.Column(db.Integer)
-    responses_robotic = db.Column(db.Integer)
-    understood_inputs = db.Column(db.Integer)
-    irrelevant_responses = db.Column(db.Integer)
-    error_handling = db.Column(db.Integer)
+    ChatGPT_rating = db.Column(db.Integer)
+    BlenderBot_rating = db.Column(db.Integer)
+    Dialogpt_rating = db.Column(db.Integer)
+    NLPModel_rating = db.Column(db.Integer)
+    CounselChatModel_rating = db.Column(db.Integer)
+    personality = db.Column(db.Integer)
+    responses = db.Column(db.Integer)
+    robotic = db.Column(db.Integer)
+    concerns = db.Column(db.Integer)
+    irrelevant = db.Column(db.Integer)
+    handling = db.Column(db.Integer)
 
 class AssessmentInteraction(db.Model):
     __tablename__ = 'Assessment_Interaction'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(255))
-    chatbot_interaction = db.Column(db.String(255))
+    require_mh_support = db.Column(db.String(255))
     cbt_techniques = db.Column(db.String(10))
     favorite_techniques = db.Column(db.Text)
 

@@ -1,12 +1,13 @@
 from flask import Flask, render_template, redirect, session, request, flash, jsonify, url_for
 from database import db, init_db, create_user, Users, Chat, Messages, CBT_Trigger, EmotionAnalysis, ThoughtDiary, \
     MoodTracker, get_sentiments, AssessmentDemography, AssessmentModel, AssessmentInteraction, AssessmentPrivacy, \
-    AssessmentRecommendation, AssessmentFeedback, AssessmentEmotExperience, AssessmentUIExperience
+    AssessmentRecommendation, AssessmentFeedback, AssessmentEmotExperience, AssessmentUIExperience, \
+    RecommendedVideo, RecommendedArticle, RecommendedBook, RecommendedPodcast
 import secrets
 from config import SQLALCHEMY_DATABASE_URI
-from sqlalchemy import distinct
+from sqlalchemy import distinct, text
 from datetime import datetime, date
-#from chatgpt import start_chatbot
+from chatgpt import start_chatbot
 #from dialogpt import chat_with_dialogpt
 #from blenderbot import generate_response
 
@@ -24,11 +25,128 @@ app.secret_key = secret_key
 
 # Initialize the database with the app
 init_db(app)
-
+messages = []
 
 @app.route('/')
 def index():
-    return render_template('questionaire.html')
+    return render_template('chat.html', messages=messages)
+
+def create_user(Username, email, password):
+    try:
+        new_user = Users(Username=Username, email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return True  # User created successfully
+    except Exception as error:
+        print(f"Error creating user: {error}")
+        return False  # Error creating user
+
+# Function to check if a user exists and validate the password
+def check_user(Username, password):
+    try:
+        user = Users.query.filter_by(Username=Username).first()
+
+        if user is None:
+            return False  # User does not exist
+
+        # Validate the password using bcrypt or another secure method
+        # For example, using bcrypt:
+        # if bcrypt.check_password_hash(user.password, password):
+        if user.password == password:
+            return True  # Login successful
+        else:
+            return False  # Incorrect password
+
+    except Exception as error:
+        print(f"Error checking user: {error}")
+        return False  # Error checking user
+
+
+@app.route("/create_user", methods=["GET", "POST"])
+def create_user_route():
+    if request.method == "POST":
+        # Handle the form submission for creating a user
+        # Extract the form data and insert it into the database
+        Username = request.form["Username"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        # Call the function to create the user in the database (using database.py)
+        if create_user(Username, email, password):
+            # If user creation is successful, redirect to the dashboard
+            session['username'] = Username
+            return redirect('/dashboard')
+        else:
+            # If user creation fails, show an error message
+            flash("Error creating user.", "error")
+
+    return render_template("home.html")
+
+
+@app.route("/consent", methods=["GET", "POST"])
+def consent():
+    if request.method == "POST":
+        # Handle the form submission for creating a user
+        # Extract the form data and insert it into the database
+        Username = request.form["Username"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        # Call the function to create the user in the database (using database.py)
+        if create_user(Username, email, password):
+            # If user creation is successful, redirect to the dashboard
+            session['Username'] = Username
+            return redirect('/home')
+        else:
+            # If user creation fails, show an error message
+            flash("Error creating user.", "error")
+
+    return render_template("home.html")
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        Username = request.form['Username']
+        password = request.form['password']
+
+        # Check if the user exists in the database and validate the password
+        if check_user(Username, password):
+            # User is authenticated, store their username in the session
+            session['Username'] = Username
+            return redirect('/dashboard')
+        else:
+            # Invalid credentials, show an error message
+            flash('Invalid username or password', 'error')
+            return redirect('/')
+
+    return redirect('/')
+
+
+@app.route("/dashboard")
+def dashboard():
+    if "Username" in session:
+        Username = session["Username"]
+        return render_template("dashboard.html", Username=Username)
+    else:
+        return redirect("/")
+
+@app.route('/recommendation.html')
+def recommended_articles():
+    recommended_articles_data = db.session.execute(text("SELECT * FROM recommended_articles")).fetchall()
+    recommended_videos_data = db.session.execute(text("SELECT * FROM recommended_videos")).fetchall()
+    recommended_books_data = db.session.execute(text("SELECT * FROM recommended_books")).fetchall()
+    recommended_podcast_data = db.session.execute(text("SELECT * FROM recommended_podcasts")).fetchall()
+
+    return render_template(
+        'recommendation.html',
+        recommended_articles=recommended_articles_data,
+        recommended_videos=recommended_videos_data,
+        recommended_books=recommended_books_data,
+        recommended_podcast=recommended_podcast_data
+    )
+
 
 @app.route("/model.html", methods=["GET", "POST"])
 def model():
@@ -59,8 +177,9 @@ def model_select():
 @app.route("/chat")
 def chat_ui():
     return render_template("chat.html")
-#@app.route("/chat", methods=["POST"])
-#def chat():
+
+@app.route("/chat", methods=["POST"])
+def chat():
     username = request.form.get('username', 'guest')
     user_input = request.form.get("message")
     # chat_model = session.get("chat_model")
@@ -74,8 +193,12 @@ def chat_ui():
     # print(trigger_words)
     #print(trigger_word_found)
 
-    #bot_response = chat_with_dialogpt(user_input)
-    #print(bot_response)
+    bot_response = start_chatbot(user_input)
+    print(bot_response)
+
+    messages.append({'user': user_input, 'bot': bot_response})
+
+    return {'bot_response': bot_response}
 
     #new_message = Messages(username=username, user_response=user_input, bot_response=bot_response)
     #db.session.add(new_message)
@@ -135,113 +258,6 @@ def thought_diary_post():
 
 
 
-
-def create_user(username, email, password):
-    try:
-        new_user = Users(username=username, email=email, password=password)
-        db.session.add(new_user)
-        db.session.commit()
-
-        return True  # User created successfully
-    except Exception as error:
-        print(f"Error creating user: {error}")
-        return False  # Error creating user
-
-
-# Function to check if a user exists and validate the password
-def check_user(username, password):
-    try:
-        user = Users.query.filter_by(username=username).first()
-
-        if user is None:
-            return False  # User does not exist
-
-        # Validate the password using bcrypt or another secure method
-        # For example, using bcrypt:
-        # if bcrypt.check_password_hash(user.password, password):
-        if user.password == password:
-            return True  # Login successful
-        else:
-            return False  # Incorrect password
-
-    except Exception as error:
-        print(f"Error checking user: {error}")
-        return False  # Error checking user
-
-
-@app.route("/create_user", methods=["GET", "POST"])
-def create_user_route():
-    if request.method == "POST":
-        # Handle the form submission for creating a user
-        # Extract the form data and insert it into the database
-        username = request.form["username"]
-        email = request.form["email"]
-        password = request.form["password"]
-
-        # Call the function to create the user in the database (using database.py)
-        if create_user(username, email, password):
-            # If user creation is successful, redirect to the dashboard
-            session['username'] = username
-            return redirect('/dashboard')
-        else:
-            # If user creation fails, show an error message
-            flash("Error creating user.", "error")
-
-    return render_template("contact.html")
-
-
-@app.route("/consent", methods=["GET", "POST"])
-def consent():
-    if request.method == "POST":
-        # Handle the form submission for creating a user
-        # Extract the form data and insert it into the database
-        username = request.form["username"]
-        email = request.form["email"]
-        password = request.form["password"]
-
-        # Call the function to create the user in the database (using database.py)
-        if create_user(username, email, password):
-            # If user creation is successful, redirect to the dashboard
-            session['username'] = username
-            return redirect('/home')
-        else:
-            # If user creation fails, show an error message
-            flash("Error creating user.", "error")
-
-    return render_template("home.html")
-
-
-@app.route('/login', methods=['POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        # Check if the user exists in the database and validate the password
-        if check_user(username, password):
-            # User is authenticated, store their username in the session
-            session['username'] = username
-            return redirect('/dashboard')
-        else:
-            # Invalid credentials, show an error message
-            flash('Invalid username or password', 'error')
-            return redirect('/')
-
-    return redirect('/')
-
-
-@app.route("/dashboard")
-def dashboard():
-    if "username" in session:
-        username = session["username"]
-        return render_template("dashboard.html", username=username)
-    else:
-        return redirect("/")
-
-
-
-
-
 @app.route('/chat_history.html')
 def chatHistory():
     return render_template('chat_history.html')
@@ -298,7 +314,7 @@ def thought_entries_and_mood_tracker():
                            emotion_data=distinct_response_values)
 
 
-@app.route('/emotional', methods=['POST'])
+@app.route('/aemotional', methods=['POST'])
 def emot_experience():
     if request.method == 'POST':
         username = 'SRH'
@@ -353,7 +369,7 @@ def emot_experience():
         db.session.commit()
 
     return render_template('questionaire.html')
-@app.route('/feedback', methods=['POST'])
+@app.route('/afeedback', methods=['POST'])
 def feedback():
     if request.method == 'POST':
         username = 'SRH'
@@ -371,7 +387,7 @@ def feedback():
 
     return render_template('questionaire.html')
 
-@app.route('/uiexperience', methods=['POST'])
+@app.route('/auiexperience', methods=['POST'])
 def ui_experience():
     if request.method == 'POST':
         username = 'SRH'
@@ -397,7 +413,7 @@ def ui_experience():
 
     return render_template('questionaire.html')  # Redirect to a success page after submission
 
-@app.route('/recommendation', methods=['POST'])
+@app.route('/arecommendation', methods=['POST'])
 def assessment_recommendation():
     if request.method == 'POST':
         username = 'SRH'
@@ -421,7 +437,7 @@ def assessment_recommendation():
         db.session.commit()
 
     return render_template('questionaire.html')
-@app.route('/privacy', methods=['POST'])
+@app.route('/aprivacy', methods=['POST'])
 def assessment_privacy():
     if request.method == 'POST':
         username = 'SRH'
@@ -443,18 +459,18 @@ def assessment_privacy():
 
     return render_template('questionaire.html')
 
-@app.route('/interaction', methods=['POST'])
+@app.route('/ainteraction', methods=['POST'])
 def assessment_interaction():
     if request.method == 'POST':
         username = 'SRH'
-        chatbot_interaction = request.form.get('chatbot-interaction')
+        require_mh_support = request.form.get('require_mh_support')
         cbt_techniques = request.form.get('cbt-techniques')
         favorite_techniques = request.form.get('favorite-techniques')
 
         # Create an instance of AssessmentInteraction
         assessment = AssessmentInteraction(
             username=username,
-            chatbot_interaction=chatbot_interaction,
+            require_mh_support=require_mh_support,
             cbt_techniques=cbt_techniques,
             favorite_techniques=favorite_techniques
         )
@@ -465,12 +481,16 @@ def assessment_interaction():
 
     return render_template('questionaire.html')
 
-@app.route('/chatbotmodel', methods=['POST'])
+@app.route('/achatbotmodel', methods=['POST'])
 def chatbot_model_assessment():
     if request.method == 'POST':
         # Get data from the form
         username = 'SRH'
-        chatbot_model = request.form['chatbotModel']
+        ChatGPT_rating = request.form['ChatGPT_rating']
+        BlenderBot_rating = request.form['BlenderBot_rating']
+        Dialogpt_rating = request.form['Dialogpt_rating']
+        NLPModel_rating = request.form['NLPModel_rating']
+        CounselChatModel_rating = request.form['CounselChatModel_rating']
         personality_engaging = request.form['personality']  # Corrected key
         responses_clear = request.form['responses']  # Corrected key
         responses_robotic = request.form['robotic']  # Corrected key
@@ -481,13 +501,17 @@ def chatbot_model_assessment():
         # Create an instance of AssessmentChatbotModel
         assessment = AssessmentModel(
             username=username,
-            chatbot_model=chatbot_model,
-            personality_engaging=personality_engaging,
-            responses_clear=responses_clear,
-            responses_robotic=responses_robotic,
-            understood_inputs=understood_inputs,
-            irrelevant_responses=irrelevant_responses,
-            error_handling=error_handling
+            ChatGPT_rating=ChatGPT_rating,
+            BlenderBot_rating=BlenderBot_rating,
+            Dialogpt_rating=Dialogpt_rating,
+            NLPModel_rating=NLPModel_rating,
+            CounselChatModel_rating=CounselChatModel_rating,
+            personality=personality_engaging,
+            responses=responses_clear,
+            robotic=responses_robotic,
+            concerns=understood_inputs,
+            irrelevant=irrelevant_responses,
+            handling=error_handling
         )
 
         # Add and commit the assessment to the database
@@ -496,7 +520,7 @@ def chatbot_model_assessment():
 
 
     return render_template('questionaire.html')
-@app.route('/demographic', methods=['POST'])
+@app.route('/ademographic', methods=['POST'])
 def assessment():
     if request.method == 'POST':
         username = 'SRH'

@@ -127,11 +127,12 @@
             <li class="nav-item">
                 <a class="nav-link" id="exercise-tab" data-toggle="tab" href="#exercise" role="tab" aria-controls="exercise" aria-selected="false">Exercise</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="food-tab" data-toggle="tab" href="#food" role="tab" aria-controls="food" aria-selected="false">Food</a>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link" id="yoga-tab" data-toggle="tab" href="#yoga" role="tab" aria-controls="yoga" aria-selected="false">Yoga</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="food-tab" data-toggle="tab" href="#food" role="tab" aria-controls="food" aria-selected="false">Food</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -188,17 +189,17 @@
                 -->
             </div>
             <div class="tab-pane fade" id="exercise" role="tabpanel" aria-labelledby="exercise-tab">
-             {% include 'exercise.html' %}
-            </div>
-
-            <!-- Food Tab Content -->
-            <div class="tab-pane fade" id="food" role="tabpanel" aria-labelledby="food-tab">
-                 {% include 'food.html' %}
+                {% include 'exercise.html' %}
             </div>
 
             <!-- Yoga Tab Content -->
             <div class="tab-pane fade" id="yoga" role="tabpanel" aria-labelledby="yoga-tab">
                 {% include 'yoga.html' %}
+            </div>
+
+            <!-- Food Tab Content-->
+            <div class="tab-pane fade" id="food" role="tabpanel" aria-labelledby="food-tab">
+                 {% include 'food.html' %}
             </div>
         </div>
     </div>

@@ -38,10 +38,10 @@ def start_chatbot(user_input):
 
 
 # Main loop for interacting with the chatbot
-while True:
-    user_input = input("You: ")
-    if user_input.lower() == 'exit':
-        break  # Exit the chatbot if the user types 'exit'
+#while True:
+    #user_input = input("You: ")
+   # if user_input.lower() == 'exit':
+      #  break  # Exit the chatbot if the user types 'exit'
 
-    response = start_chatbot(user_input)
-    print(f"Chatbot: {response}")
+   # response = start_chatbot(user_input)
+    #print(f"Chatbot: {response}")
