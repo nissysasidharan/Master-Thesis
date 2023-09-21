@@ -82,6 +82,12 @@ while True:
             bot_response = generate_response(user_input)  # Get the response as a string
             print(bot_response)
 
+        if user_input.lower() == 'identify':
+            user_input = input("Enter your text: ")
+            result = train_and_predict_distortions(user_input)
+            print("Identified Distortions:", result)
+            break
+
     except (KeyboardInterrupt, EOFError):
         print('Exiting the CBTBot.')
         break
