@@ -1,88 +1,87 @@
-import re
+import random
+from blenderbot import generate_response
+from distortion import train_and_predict_distortions
 
-def CBTBot(user_input):
-    # Define a dictionary of CBT techniques
-    cbt_techniques = {
-        'Cognitive restructuring': 'Examining and challenging negative thoughts',
-        'Behavioral activation': 'Engaging in activities that give a sense of pleasure or accomplishment',
-        'Problem-solving skills training': 'Identifying problems and coming up with practical solutions',
-        'Relaxation techniques': 'Engaging in relaxation techniques such as deep breathing, progressive muscle relaxation, or visualization',
-        'Exposure therapy': 'Gradually exposing oneself to feared situations or stimuli'
-    }
+# Define list of negative thought patterns
+negative_thoughts = [
+    'All-or-nothing thinking',
+    'Overgeneralization',
+    'Mental filtering',
+    'Discounting the positive',
+    'Jumping to conclusions',
+    'Magnification and minimization',
+    'Emotional reasoning',
+    'Should statements',
+    'Labeling and mislabeling',
+    'Personalization'
+]
 
-    # Define a list of negative thought patterns
-    negative_thoughts = [
-        'All-or-nothing thinking',
-        'Overgeneralization',
-        'Mental filtering',
-        'Discounting the positive',
-        'Jumping to conclusions',
-        'Magnification and minimization',
-        'Emotional reasoning',
-        'Should statements',
-        'Labeling and mislabeling',
-        'Personalization'
-    ]
+# Define a list of positive thought patterns
+positive_thoughts = [
+    'Balanced thinking',
+    'Evidence gathering',
+    'Identifying exceptions',
+    'Thinking in shades of grey',
+    'Mindfulness',
+    'Gratitude',
+    'Self-compassion',
+    'Relaxation',
+    'Assertiveness',
+    'Problem-solving'
+]
 
-    # Define a list of positive thought patterns
-    positive_thoughts = [
-        'Balanced thinking',
-        'Evidence gathering',
-        'Identifying exceptions',
-        'Thinking in shades of grey',
-        'Mindfulness',
-        'Gratitude',
-        'Self-compassion',
-        'Relaxation',
-        'Assertiveness',
-        'Problem-solving'
-    ]
+# Define a function that prompts the user to describe a negative event and uses CBT techniques to help them reframe their thoughts
+def cbt_prompt():
+    print('Think of a negative event that happened recently. Describe it briefly:')
+    event_description = input()
+    print('Which of the following negative thought patterns do you think you might be using?')
+    for i, thought in enumerate(negative_thoughts):
+        print('{}) {}'.format(i + 1, thought))
 
-    # Define a regular expression pattern for matching messages that contain a CBT technique keyword
-    technique_pattern = re.compile(r'(.*)(cognitive restructuring|behavioral activation|problem-solving|relaxation|exposure)(.*)', re.IGNORECASE)
+    thought_index = input('Enter the number of the thought pattern (or type "identify" if you are unsure): ')
 
-    # Check if the user's message contains a CBT keyword
-    match = technique_pattern.search(user_input)
-    if match:
-        # Identify CBT keyword and describe technique
-        technique_keyword = match.group(2).title()
-        technique_description = cbt_techniques.get(technique_keyword)
-        if technique_description:
-            return '{} involves {}'.format(technique_keyword, technique_description)
-        else:
-            return 'I\'m sorry, I don\'t know much about that technique. Please try another one.'
-
-    # If the user types "help", prompt them to describe a negative event and use CBT techniques to help them reframe their thoughts
-    elif user_input.lower() == 'help':
-        response = 'Think of a negative event that happened recently. Describe it briefly:\n'
-        event_description = input()
-        response += 'Which of the following negative thought patterns do you think you might be using?\n'
-        for i, thought in enumerate(negative_thoughts):
-            response += '{}) {}\n'.format(i + 1, thought)
-        thought_index = int(input()) - 1
-        thought_description = negative_thoughts[thought_index]
-        positive_thought_description = positive_thoughts[thought_index]
-        response += 'Okay, it sounds like you might be using {}.\n'.format(thought_description)
-        response += 'Let\'s try to reframe your thoughts to be more positive.\n'
-        response += 'What is a more balanced way of thinking about this situation?\n'
-        balanced_thought = input()
-        response += 'That\'s a great way of thinking about it! Here is a positive thought to replace the negative one:\n'
-        response += '{}\n'.format(positive_thought_description)
-        response += '{}\n'.format(balanced_thought)
-        return response
-
+    if thought_index.lower() == 'identify':
+        user_input = input("Enter your text: ")
+        result = train_and_predict_distortions(user_input)
+        print("Identified Distortions:", result)  # Trigger the training function
     else:
-        return 'I\'m here to help with CBT techniques. You can ask about them or say "help" to get started.'
+        try:
+            thought_index = int(thought_index) - 1
+            if 0 <= thought_index < len(negative_thoughts):
+                thought_description = negative_thoughts[thought_index]
+                positive_thought_description = positive_thoughts[thought_index]
+                print('Okay, it sounds like you might be using {}.'.format(thought_description))
+                print('Let\'s try to reframe your thoughts to be more positive.')
+                print('What is a more balanced way of thinking about this situation?')
+                balanced_thought = input()
+                print(
+                    'That\'s a great way of thinking about it! Here is a positive thought to replace the negative one:')
+                print('{}'.format(positive_thought_description))
+                print('{}'.format(balanced_thought))
+            else:
+                user_input = input("Enter your response: ")  # Prompt user for input
+                bot_response = generate_response(user_input)  # Get the response as a string
+                print(bot_response)
 
-# Start the conversation with the bot
-#print('Welcome to the CBTBot. Type something to begin...')
+        except ValueError:
+            print('Invalid input. Please enter a valid number.')
 
-#while True:
-        # try:
-        #  user_input = input()
-        # bot_response = CBTBot(user_input)
-    # print(bot_response)
+# Start the conversation with the user
+print('Welcome to the CBTBot. Type something to begin...')
 
-    # Press ctrl-c or ctrl-d on the keyboard to exit
-    #except (KeyboardInterrupt, EOFError, SystemExit):
-# break
+while True:
+    try:
+        user_input = input()
+
+        # If the user types "help", prompt them to describe a negative event and use CBT techniques to help them reframe their thoughts
+        if user_input.lower() == 'help':
+            cbt_prompt()
+
+        # If the user's message does not contain the keyword "help", get a response from the bot
+        else:
+            bot_response = generate_response(user_input)  # Get the response as a string
+            print(bot_response)
+
+    except (KeyboardInterrupt, EOFError):
+        print('Exiting the CBTBot.')
+        break

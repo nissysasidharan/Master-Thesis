@@ -7,9 +7,11 @@ import secrets
 from config import SQLALCHEMY_DATABASE_URI
 from sqlalchemy import distinct, text
 from datetime import datetime, date
-from chatgpt import start_chatbot
+#from chatgpt import start_chatbot
 #from dialogpt import chat_with_dialogpt
-#from blenderbot import generate_response
+from blenderbot import generate_response
+import tensorflow as tf
+import numpy as np
 
 app = Flask(__name__)
 # Set the SQLALCHEMY_DATABASE_URI using the configuration
@@ -29,7 +31,8 @@ messages = []
 
 @app.route('/')
 def index():
-    return render_template('chat.html', messages=messages)
+    return render_template('home.html'#, messages=messages
+                           )
 
 def create_user(Username, email, password):
     try:
@@ -163,7 +166,7 @@ def model_select():
 
     # Store the chat_model in the session
     session["chat_model"] = chat_model
-    print(chat_model)
+    #print(chat_model)
 
     # Insert the chat data into the database
     try:
@@ -176,7 +179,7 @@ def model_select():
     return redirect("/chat")
 @app.route("/chat")
 def chat_ui():
-    return render_template("chat.html")
+    return render_template("chat.html", messages=messages)
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -193,24 +196,25 @@ def chat():
     # print(trigger_words)
     #print(trigger_word_found)
 
-    bot_response = start_chatbot(user_input)
+    bot_response = generate_response(user_input)  # Get the response as a string
+
     print(bot_response)
 
     messages.append({'user': user_input, 'bot': bot_response})
 
     return {'bot_response': bot_response}
 
+
     #new_message = Messages(username=username, user_response=user_input, bot_response=bot_response)
     #db.session.add(new_message)
     #db.session.commit()
 
     # Determine whether to show the popup
-    #show_popup = trigger_word_found  # Adjust this as needed
+   # show_popup = trigger_word_found  # Adjust this as needed
 
     # Pass the bot_response and other data to the chat.html template
-    #return render_template("chat.html", bot_response=bot_response, user_input=user_input#, show_popup=show_popup
+   # return render_template("chat.html", bot_response=bot_response, user_input=user_input#, show_popup=show_popup
                           # )
-
 
 
 @app.route("/handle_popup_response", methods=["GET", "POST"])
@@ -257,10 +261,102 @@ def thought_diary_post():
     return render_template("thought_diary.html")
 
 
+def get_sentiment_data(Username):
+    # get_sentiments(Username)
+    data = []
+    tracking_dates = db.session.query(MoodTracker.tracking_date).filter_by(Username=Username).distinct()
 
-@app.route('/chat_history.html')
-def chatHistory():
-    return render_template('chat_history.html')
+    for tracking_date in tracking_dates:
+        sentiments = db.session.query(MoodTracker.sentiment).filter_by(Username=Username,
+                                                                       tracking_date=tracking_date[0]).all()
+        message_ids = db.session.query(MoodTracker.Message_id).filter_by(Username=Username,
+                                                                         tracking_date=tracking_date[0]).all()
+
+        sentiments = [sentiment[0] for sentiment in sentiments]
+        message_ids = [message_id[0] for message_id in message_ids]
+
+        data.append({
+            'date': tracking_date[0],
+            'sentiments': sentiments,
+            'message_ids': message_ids
+        })
+
+    return data
+
+
+@app.route("/chat_history.html", methods=["GET", "POST"])
+def chat_history():
+    # Username = request.form.get('sasi')
+    Username = 'SRH'
+    # analyze_and_insert_emotions(Username)
+    # Fetch specific columns from the EmotionalAnalysis table
+    emot_query = db.session.query(EmotionAnalysis.Responses).filter(EmotionAnalysis.Username == Username).distinct()
+    responses = emot_query.all()
+
+    distinct_responses = [response.Responses for response in responses]
+
+    # Fetch thought diary data from the SQL table for the specified username
+    thought_entries = db.session.query(ThoughtDiary).filter_by(username=Username).all()
+    # summarize_and_insert_summary('sasi')
+
+    #summaries = db.session.query(ChatSummary).filter_by(username=Username).all()
+
+    return render_template("chat_history.html", thought_entries=thought_entries,
+                           responses=distinct_responses#, summaries=summaries
+                           )
+
+
+@app.route('/get_sentiment_data')
+def fetch_sentiment_data():
+    Username = 'SRH'  # Set the username here
+
+    data = get_sentiment_data(Username)
+    return jsonify(data)
+
+
+@app.route("/update_emotional_analysis", methods=["POST"])
+def update_emotional_analysis():
+    Username = request.json.get('Username', 'SRH')
+    selected_response = request.json.get('response', '')
+
+    # Fetch emotional analysis data based on the selected response
+    query = db.session.query(
+        EmotionAnalysis.label,
+        db.func.avg(EmotionAnalysis.SCORE).label('avg_score')
+    ).filter_by(Username=Username, Responses=selected_response).group_by(EmotionAnalysis.label).all()
+
+    emotions_labels = [result.label for result in query]
+    emotions_scores = [result.avg_score for result in query]
+
+    return jsonify(emotions_labels=emotions_labels, emotions_scores=emotions_scores)
+
+
+@app.route("/add_thought_entry", methods=["POST"])
+def add_thought_entry():
+    # Extract data from the form
+    date = request.form.get("date")
+    situation = request.form.get("situation")
+    automatic_thoughts = request.form.get("automatic_thoughts")
+    emotions = request.form.get("emotions")
+    adaptive_response = request.form.get("adaptive_response")
+    outcome = request.form.get("outcome")
+    username = "sasi"  # Set the username here
+
+    # Create a new ThoughtDiary object and add it to the database
+    new_entry = ThoughtDiary(
+        date=date,
+        situation=situation,
+        automatic_thoughts=automatic_thoughts,
+        emotions=emotions,
+        adaptive_response=adaptive_response,
+        outcome=outcome,
+        username=username
+    )
+    db.session.add(new_entry)
+    db.session.commit()
+
+    # Return a JSON response indicating success
+    return jsonify({"message": "Thought entry added successfully"})
 
 
 @app.route('/CBT.html')

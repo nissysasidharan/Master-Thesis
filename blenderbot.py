@@ -6,6 +6,9 @@ tokenizer = AutoTokenizer.from_pretrained("facebook/blenderbot-400M-distill")
 model = AutoModelForSeq2SeqLM.from_pretrained("facebook/blenderbot-400M-distill")
 
 # Define a function to generate a response
+import torch
+
+
 def generate_response(user_input, chat_history=None, max_response_length=1024):
     # Ensure that user_input is of type str
     user_input = str(user_input)
@@ -28,16 +31,23 @@ def generate_response(user_input, chat_history=None, max_response_length=1024):
 
     # Decode the response and remove special tokens
     response = tokenizer.decode(response_ids[0], skip_special_tokens=True)
-    return response, bot_input_ids  # Return bot_input_ids to update chat_history
+
+    # Convert the response to a plain string
+    response = str(response)
+
+    return response, bot_input_ids
+
+
+# Return bot_input_ids to update chat_history
 
 # Main loop for interacting with the chatbot
 chat_history = None  # Initialize chat history as None
-while True:
-    user_input = input("You: ")
-    if user_input.lower() == "exit":
-        break
-    response, bot_input_ids = generate_response(user_input, chat_history)
-    print("Bot:", response)
+#while True:
+    #user_input = input("You: ")
+    #if user_input.lower() == "exit":
+      #  break
+    #response, bot_input_ids = generate_response(user_input, chat_history)
+    #print("Bot:", response)
 
     # Update chat history
-    chat_history = bot_input_ids
+    #chat_history = bot_input_ids
